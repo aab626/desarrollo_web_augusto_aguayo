@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Sistema de Adopciones | Estadísticas</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="site-header">
+            <h1 class="site-title">Sistema de Adopciones</h1>
+            
+            <nav class="main-nav">
+                <button type="button" class="nav-btn" id="btn-nav-inicio">Inicio</button>
+                <button type="button" class="nav-btn" id="btn-nav-addpost">Agregar aviso</button>
+                <button type="button" class="nav-btn" id="btn-nav-listings">Ver listado</button>
+                <button type="button" class="nav-btn" id="btn-nav-statistics">Ver estadísticas</button>
+            </nav>
+        </header>
+
+        <!-- Contents -->
+        <main class="main-content">
+            <h2 class="section-title">Estadísticas</h2>
+
+            <div class="statistics-grid">
+                <div class="stat-item">
+                    <h3 class="stat-title">Adopciones por día</h3>
+                    <img class="stat-image" src="images/statistics/adoptions_per_day.png" alt="Gráfico de barras: adopciones por día.">
+                </div>
+                
+                <div class="stat-item">
+                    <h3 class="stat-title">Avisos por tipo de mascota</h3>
+                    <img class="stat-image" src="images/statistics/adoptions_pie.png" alt="Gráfico de torta: adopciones de gatos vs. perros">
+                </div>
+                
+                <div class="stat-item">
+                    <h3 class="stat-title">Adopciones por tipo, mes a mes</h3>
+                    <img class="stat-image" src="images/statistics/adoptions_monthly_per_type.png" alt="Gráfico de barras: adopciones por mes, por tipo.">
+                </div>            
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/navigation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Sistema de Adopciones | Nuevo Aviso</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="site-header">
+            <h1 class="site-title">Sistema de Adopciones</h1>
+            
+            <nav class="main-nav">
+                <button type="button" class="nav-btn" id="btn-nav-inicio">Inicio</button>
+                <button type="button" class="nav-btn" id="btn-nav-addpost">Agregar aviso</button>
+                <button type="button" class="nav-btn" id="btn-nav-listings">Ver listado</button>
+                <button type="button" class="nav-btn" id="btn-nav-statistics">Ver estadísticas</button>
+            </nav>
+        </header>
+
+        <!-- Contents -->
+        <main class="main-content">
+            <h2 class="section-title">Publicar nuevo aviso de adopción</h2>
+
+            <form id="form-newpost" class="adoption-form">
+                <fieldset class="form-section location-section">
+                    <legend class="section-heading">Datos de ubicación</legend>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-region-select">Región</label>
+                        <select class="form-input" id="form-region-select" required>
+                        </select>
+                    </div>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-commune-select">Comuna</label>
+                        <select class="form-input" id="form-commune-select" required>
+                        </select>
+                    </div>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-sector-input">Sector</label>
+                        <input class="form-input" type="text" id="form-sector-input" maxlength="100" required/>
+                    </div>
+                </fieldset>
+    
+                <!-- Contact data -->
+                <fieldset class="form-section contact-section">
+                    <legend class="section-heading">Datos de contacto</legend>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-name">Nombre</label>
+                        <input class="form-input" type="text" id="form-name" minlength="3" maxlength="200" required/>
+                    </div>
+                
+                    <div class="form-row">
+                        <label class="form-label" for="form-email">Email</label>
+                        <input class="form-input" type="email" id="form-email" maxlength="100" required/>
+                    </div>
+                
+                    <div class="form-row">
+                        <label class="form-label" for="form-phone">Número de Celular</label>
+                        <input class="form-input" type="tel" id="form-phone" minlength="13" maxlength="13" placeholder="Ejemplo: +569.12345678" required/>
+                    </div>
+    
+                    <div class="contact-methods">
+                        <div class="section-subheading">Métodos de contacto</div>
+    
+                        <div id="form-contact-methods-container" class="contact-methods-container">
+                        </div>
+    
+                    </div>
+                </fieldset>
+    
+                <!-- Pet data -->
+                <fieldset class="form-section pet-section">
+                    <legend class="section-heading">Datos de la mascota</legend>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-type">Tipo</label>
+                        <select class="form-input" id="form-type" required>
+                            <option disabled selected value="">--- SELECCIONE TIPO ---</option>
+                            <option value="gato">Gato</option>
+                            <option value="perro">Perro</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-quantity">Cantidad</label>
+                        <input class="form-input" type="number" id="form-quantity" min="1" required/>
+                    </div>
+    
+                    <div class="form-row age-row">
+                        <label class="form-label" for="form-age-quantity">Edad</label>
+                        <input class="form-input age-input" type="number" id="form-age-quantity" min="1" required/>
+    
+                        <select class="form-input age-units" id="form-age-units" required>
+                            <option disabled selected value="">--- SELECCIONE UNIDAD ---</option>
+                            <option value="meses">Meses</option>
+                            <option value="annos">Años</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-deliverytime">Fecha disponible de Entrega</label>
+                        <input class="form-input" type="datetime-local" id="form-deliverytime" required/>
+                    </div>
+    
+                    <div class="form-row">
+                        <label class="form-label" for="form-description">Descripción</label>
+                        <textarea class="form-input form-textarea" id="form-description" rows="10" cols="50" placeholder="Descripción de las mascotas" required></textarea>
+                    </div>
+    
+                    <div class="photos-section">
+                        <label class="section-subheading">Fotos</label>
+                        <div id="form-photos-container" class="photos-container">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-messages">
+                    <div id="form-error" class="error-message" hidden>
+                        <p id="form-error-msg" class="error-text"></p>
+                    </div>
+
+                    <div id="form-success" class="success-message" hidden>
+                        <p id="form-success-msg" class="success-text"></p>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary" id="form-btn-submit">Agregar este aviso de adopción</button>
+                    <button type="button" class="btn btn-secondary" id="form-btn-goback" hidden>Volver al Inicio</button>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+    <!-- Form submit confirmation modal -->
+    <div id="form-confirmation-modal" class="modal" hidden>
+        <div class="modal-content">
+            <p class="modal-text">¿Está seguro que desea agregar este aviso de adopción?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" id="btn-form-modal-no">No, quiero volver al formulario.</button>
+                <button type="button" class="btn btn-primary" id="btn-form-modal-yes">Si, estoy seguro.</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/navigation.js"></script>
+    <script src="scripts/newpost-form-handler.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Sistema de Adopciones | Portada</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="site-header">
+            <h1 class="site-title">Sistema de Adopciones</h1>
+            
+            <nav class="main-nav">
+                <button type="button" class="nav-btn" id="btn-nav-inicio">Inicio</button>
+                <button type="button" class="nav-btn" id="btn-nav-addpost">Agregar aviso</button>
+                <button type="button" class="nav-btn" id="btn-nav-listings">Ver listado</button>
+                <button type="button" class="nav-btn" id="btn-nav-statistics">Ver estadísticas</button>
+            </nav>
+        </header>
+
+        <!-- Contents -->
+        <main class="main-content">
+            <div class="welcome-section">
+                <p class="welcome-text">Bienvenido</p>
+            </div>
+            
+            <h2 class="section-title">Avisos más recientes</h2>
+
+            <table class="data-table recent-posts-table">
+                <thead>
+                    <tr>
+                        <th class="table-header">Fecha publicación</th>
+                        <th class="table-header">Comuna</th>
+                        <th class="table-header">Sector</th>
+                        <th class="table-header">
+                            <div>Cantidad Tipo</div>
+                            <div>Edad</div>
+                        </th>
+                        <th class="table-header">Foto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row">
+                        <td class="table-cell date-cell">2025-08-21 12:00</td>
+                        <td class="table-cell">Santiago</td>
+                        <td class="table-cell">Blanco Encalada 2007</td>
+                        <td class="table-cell pet-info">
+                            <div class="pet-quantity">2 gatos</div>
+                            <div class="pet-age">3 años</div>
+                        </td>
+                        <td class="table-cell photo-cell"><img src="images/photos/2cats.jpg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+                    </tr>
+                    
+                    <tr class="table-row">
+                        <td class="table-cell date-cell">2025-08-18 13:13</td>
+                        <td class="table-cell">Santiago</td>
+                        <td class="table-cell">Beauchef 851, DCC</td>
+                        <td class="table-cell pet-info">
+                            <div class="pet-quantity">1 Panda rojo</div>
+                            <div class="pet-age">3 años</div>
+                        </td>
+                        <td class="table-cell photo-cell"><img src="images/photos/anakena.jpeg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+                    </tr>
+        
+                    <tr class="table-row">
+                        <td class="table-cell date-cell">2025-08-13 04:21</td>
+                        <td class="table-cell">Recoleta</td>
+                        <td class="table-cell">Recoleta 1024</td>
+                        <td class="table-cell pet-info">
+                            <div class="pet-quantity">1 gato</div>
+                            <div class="pet-age">2 años</div>
+                        </td>
+                        <td class="table-cell photo-cell"><img src="images/photos/zazu.jpg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+                    </tr>
+        
+                    <tr class="table-row">
+                        <td class="table-cell date-cell">2025-08-10 12:21</td>
+                        <td class="table-cell">Independencia</td>
+                        <td class="table-cell">Independencia 2048</td>
+                        <td class="table-cell pet-info">
+                            <div class="pet-quantity">4 gatos</div>
+                            <div class="pet-age">3 meses</div>
+                        </td>
+                        <td class="table-cell photo-cell"><img src="images/photos/4cats.jpg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+                    </tr>
+        
+                    <tr class="table-row">
+                        <td class="table-cell date-cell">2025-08-03 18:59</td>
+                        <td class="table-cell">Independencia</td>
+                        <td class="table-cell">Independencia 4096</td>
+                        <td class="table-cell pet-info">
+                            <div class="pet-quantity">3 gatos</div>
+                            <div class="pet-age">6 meses</div>
+                        </td>
+                        <td class="table-cell photo-cell"><img src="images/photos/3cats.jpg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>   
+    
+    <!-- Scripts -->
+    <script src="scripts/navigation.js"></script>
+</body>
+
+</html>

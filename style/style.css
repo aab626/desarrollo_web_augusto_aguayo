@@ -1,0 +1,814 @@
+/* ==========================================================================
+   Sistema de Adopciones - CSS Styles
+   ========================================================================== */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    min-height: 100vh;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Header and Navigation
+   ========================================================================== */
+
+.site-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.site-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+
+.main-content {
+    padding: 0 2rem 2rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #4a5568;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.section-heading {
+    font-size: 1.4rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+.section-subheading {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Welcome Section (Index)
+   ========================================================================== */
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 15px;
+    color: white;
+}
+
+.welcome-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.table-header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.table-row {
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+    background-color: #f7fafc;
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Clickable table rows (listings page) */
+.listings-table .table-row {
+    cursor: pointer;
+}
+
+/* Non-clickable table rows (index page) */
+.recent-posts-table .table-row {
+    cursor: default;
+}
+
+.table-cell {
+    padding: 1rem;
+    vertical-align: top;
+}
+
+.date-cell {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.pet-info {
+    font-size: 0.9rem;
+}
+
+.pet-quantity, .pet-type, .pet-age {
+    margin-bottom: 0.25rem;
+}
+
+.pet-type {
+    font-weight: 600;
+    color: #4facfe;
+}
+
+.contact-info {
+    font-size: 0.9rem;
+}
+
+.contact-name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #2d3748;
+}
+
+.contact-method {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.contact-type {
+    font-weight: 500;
+    color: #666;
+}
+
+.contact-value {
+    color: #4facfe;
+}
+
+.photo-cell {
+    text-align: center;
+}
+
+.pet-photo {
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.pet-photo:hover {
+    transform: scale(1.05);
+}
+
+.photo-count {
+    text-align: center;
+    font-weight: 600;
+    color: #4facfe;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+.adoption-form {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background-color: #f8f9fa;
+}
+
+.form-section legend {
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: #4a5568;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.age-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: end;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.form-input {
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.form-input:disabled {
+    background-color: #f1f5f9;
+    color: #94a3b8;
+}
+
+/* Contact Methods */
+.contact-methods-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-method-row {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.contact-method-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Photo Upload */
+.photos-section {
+    margin-top: 1.5rem;
+}
+
+.photos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.photo-row {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.photo-input {
+    flex: 1;
+}
+
+/* Form Messages */
+.form-messages {
+    margin: 2rem 0;
+}
+
+.error-message {
+    background-color: #fed7d7;
+    color: #c53030;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #e53e3e;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    background-color: #c6f6d5;
+    color: #22543d;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #38a169;
+    margin-bottom: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background-color: #e2e8f0;
+    color: #4a5568;
+    border: 2px solid #cbd5e0;
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-add {
+    background-color: #48bb78;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #38a169;
+}
+
+.btn-remove {
+    background-color: #f56565;
+    color: white;
+}
+
+.btn-remove:hover {
+    background-color: #e53e3e;
+}
+
+/* ==========================================================================
+   Post Detail Page
+   ========================================================================== */
+
+.post-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #4facfe;
+}
+
+.post-photos-section {
+    margin-bottom: 2rem;
+}
+
+.photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.post-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-thumbnail {
+    cursor: pointer;
+}
+
+.photo-thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #4a5568;
+    min-width: 120px;
+    margin-right: 1rem;
+}
+
+.detail-value {
+    color: #2d3748;
+    flex: 1;
+}
+
+.description-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.description-text {
+    line-height: 1.8;
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+.contact-methods-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.contact-method-item {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.contact-method-type {
+    font-weight: 600;
+    color: #666;
+}
+
+.contact-method-value {
+    color: #4facfe;
+}
+
+.post-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Statistics Page
+   ========================================================================== */
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px) scale(1.25);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.stat-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 1rem;
+}
+
+.stat-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.stat-image:hover {
+    transform: scale(1.02);
+}
+
+/* ==========================================================================
+   Modals
+   ========================================================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.modal-close-text {
+    color: #666;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.modal-close-text:hover {
+    background-color: #f1f5f9;
+    color: #e53e3e;
+}
+
+.modal-text {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+/* Image Modal Specific */
+.image-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    padding: 1rem;
+}
+
+.image-modal-body {
+    text-align: center;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 600px;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .main-content {
+        padding: 0 1rem 1rem;
+    }
+    
+    .site-title {
+        font-size: 2rem;
+    }
+    
+    .main-nav {
+        gap: 0.5rem;
+    }
+    
+    .nav-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .data-table {
+        font-size: 0.8rem;
+    }
+    
+    .table-cell {
+        padding: 0.5rem;
+    }
+    
+    .form-section {
+        padding: 1rem;
+    }
+    
+    .contact-method-row,
+    .photo-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .age-row {
+        flex-direction: column;
+    }
+    
+    .photos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .post-photo {
+        height: 150px;
+    }
+    
+    .statistics-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 1rem;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }

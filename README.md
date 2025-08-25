@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Aplicación web estática para gestionar el proceso de adopción de perros y gatos. Permite a los usuarios publicar avisos de adopción, ver listados de animales disponibles y consultar estadísticas del sistema.
+Aplicación web estática para gestionar el proceso de adopción de perros y gatos. Permite a los usuarios publicar avisos de adopción, ver listados de animales disponibles y consultar estadísticas del sistema. Un preview en vivo se puede encontrar en [GitHub Pages](https://aab626.github.io/cc5002/tarea1/).
 
 ## Estructura del Proyecto
 

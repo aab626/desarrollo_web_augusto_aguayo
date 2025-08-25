@@ -90,6 +90,7 @@ for (let i = 0; i < 5; i++) {
     let select = document.createElement('select');
     select.className = 'form-input';
     select.id = `form-contact-method-${i}-select`;
+    select.name = `contact-method-${i}`;
     CONTACT_METHODS.forEach((contactMethod) => {
         let option = document.createElement('option');
         option.textContent = contactMethod;
@@ -114,10 +115,11 @@ for (let i = 0; i < 5; i++) {
     let input = document.createElement('input');
     input.className = 'form-input';
     input.id = `form-contact-method-${i}-input`;
+    input.name = `contact-id-${i}`;
     input.hidden = true;
     input.minLength = '4'
     input.maxLength = '50';
-    input.placeholder = 'ID o URL';
+    input.placeholder = 'Número, ID o URL';
     input.required = i>0 ? false : true;
     div.appendChild(input);
 
@@ -232,9 +234,10 @@ for (i = 0; i < 5; i++) {
     div.appendChild(label);
 
     let selectFileInput = document.createElement('input');
+    selectFileInput.type = "file";
     selectFileInput.className = 'form-input photo-input';
     selectFileInput.id = `form-photo-${i}-input`;
-    selectFileInput.type = "file";
+    selectFileInput.name = `photo-${i}`;
     selectFileInput.accept = "image/*";
     div.appendChild(selectFileInput);
 
@@ -272,78 +275,97 @@ for (let i = 0; i < 4; i++) {
     });
 }
 
-// Helper function to display an error message in the form
-const setErrorMsg = (errorMsg) => {
-    let errorDiv = document.getElementById("form-error");
-    let errorParagraph = document.getElementById("form-error-msg");
 
-    errorDiv.hidden = false;
+// Helper function to append error messages in the form
+const addErrorMsg = (errorMsg) => {
+    let errorDiv = document.getElementById("form-error");
+    let errorParagraph = document.createElement('p');
+
+    errorParagraph.className = 'error-text';
     errorParagraph.textContent = errorMsg;
-};
+    errorDiv.appendChild(errorParagraph);
+}
 
 // Function that validates the form
 const validateForm = () => {
+    let validForm = true;
+
     // Clean previous error msg
-    setErrorMsg("");
+    let errorDiv = document.getElementById('form-error');
+    errorDiv.innerHTML = '';
+
+    let erroredElements = document.querySelectorAll('.form-error-indicator');
+    console.log(erroredElements);
+    erroredElements.forEach(element => {
+        element.classList.remove('form-error-indicator');
+    });
     
     // Validate region
     let regionSelect = document.getElementById("form-region-select");
     if (!regionsData.map((r) => {return r.region;}).includes(regionSelect.value))  {
-        errorDiv.hidden = false;
-        errorParagraph.textContent = "Región inválida.";
-        return false;
+        addErrorMsg("Región inválida.")
+        regionSelect.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Validate commune
     let allComunnes = regionsData.map((x) => { return x.comunas; }).flat();
     let communeSelect = document.getElementById("form-commune-select");
     if (!allComunnes.includes(communeSelect.value)) {
-        setErrorMsg("Comuna inválida.");
-        return false;
+        addErrorMsg("Comuna inválida.")
+        communeSelect.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Validate region-commune combination
     if (!regionsData.find((r) => { return r.region == regionSelect.value; }).comunas.includes(communeSelect.value)) {
-        setErrorMsg("Comuna no pertenece a Región.");
-        return false;
+        addErrorMsg("Comuna no pertenece a Región.")
+        regionsData.classList.add('form-error-indicator');
+        regionSelect.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Sector validation
     let sectorInput = document.getElementById("form-sector-input");
     if (sectorInput.value.length > 100) {
-        setErrorMsg("Nombre de sector muy largo, no debe exceder 100 caractéres.");
-        return false;
+        addErrorMsg("Nombre de sector muy largo, no debe exceder 100 caractéres.")
+        sectorInput.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Name validation
     let nameInput = document.getElementById("form-name");
     if (nameInput.value.length < 3 || nameInput.value.length > 200) {
-        setErrorMsg("Nombre debe contener entre 3 y 200 caractéres.");
-        return false;
+        addErrorMsg("Nombre debe contener entre 3 y 200 caractéres.");
+        nameInput.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Email validation
     let emailInput = document.getElementById("form-email");
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailInput.value.length == 0 || !emailRegex.test(emailInput.value)) {
-        setErrorMsg("Email inválido.");
-        return false;
+        addErrorMsg("Email inválido.");
+        emailInput.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Phone number validation
     let phoneInput = document.getElementById("form-phone");
     const phoneRegex = /^\+\d{3}\.\d{8}$/;
     if (!phoneRegex.test(phoneInput.value)) {
-        setErrorMsg("Número de teléfono inválido.");
-        return false;
+        addErrorMsg("Número de teléfono inválido.");
+        phoneInput.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Contact method validation
     // At least one contact method must be present
     let contactMethod1Select = document.getElementById(`form-contact-method-0-select`);
     if (contactMethod1Select.value == "") {
-        setErrorMsg("Al menos un método de contacto es necesario.");
-        return false;
+        addErrorMsg("Al menos un método de contacto es necesario.");
+        contactMethod1Select.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Validate ID/URL field
@@ -353,8 +375,9 @@ const validateForm = () => {
         if (!contactDiv.hidden) {
             let inputField = document.getElementById(`form-contact-method-${i}-input`);
             if (inputField.value.length < 3 || inputField.value.length > 200) {
-                setErrorMsg(`Método de contacto (${i+1}) inválido, debe contener entre 3 y 200 caractéres.`);
-                return false;
+                addErrorMsg(`Método de contacto (${i+1}) inválido, debe contener entre 3 y 200 caractéres.`);
+                inputField.classList.add('form-error-indicator');
+                validForm = false;
             }
         }
     }
@@ -362,44 +385,50 @@ const validateForm = () => {
     // Pet type validation
     let petTypeSelect = document.getElementById('form-type');
     if (!PET_TYPES.includes(petTypeSelect.value)) {
-        setErrorMsg("Tipo de mascota inválido.");
-        return false;
+        addErrorMsg("Tipo de mascota inválido.");
+        petTypeSelect.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Pet quantity validation
     let petQuantity = document.getElementById("form-quantity");
     if (isNaN(petQuantity.value) || petQuantity.value < 1) {
-        setErrorMsg("Cantidad de mascota inválida, debe ser un número mayor o igual a 1.");
-        return false;
+        addErrorMsg("Cantidad de mascota inválida, debe ser un número mayor o igual a 1.");
+        petQuantity.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Pet age quantity validation
     let petAgeQuantity = document.getElementById('form-age-quantity');
     if (isNaN(petAgeQuantity.value) || petAgeQuantity.value < 1) {
-        setErrorMsg("Edad de mascota inválida, debe ser un número mayor o igual a 1.");
-        return false;
+        addErrorMsg("Edad de mascota inválida, debe ser un número mayor o igual a 1.");
+        petAgeQuantity.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Pet age unit validation
     let petAgeUnit = document.getElementById('form-age-units');
     if (!PET_AGE_UNITS.includes(petAgeUnit.value)) {
-        setErrorMsg("Unidad de edad inválida.");
-        return false;
+        addErrorMsg("Unidad de edad inválida.");
+        petAgeUnit.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Delivery time validation
     let deliveryTimeInput = document.getElementById('form-deliverytime');
     let deliveryTime = new Date(deliveryTimeInput.value);
     if (deliveryTime < MIN_DELIVERY_TIME) {
-        setErrorMsg(`Fecha de entrega inválida, debe ser despúes de: ${MIN_DELIVERY_TIME.toLocaleString()}`);
-        return false;
+        addErrorMsg(`Fecha de entrega inválida, debe ser despúes de: ${MIN_DELIVERY_TIME.toLocaleString()}`);
+        deliveryTimeInput.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Description validation
     let description = document.getElementById("form-description");
     if (description.value.length < 30) {
-            setErrorMsg(`Descripción muy corta, por favor comenta algo más de la mascota.`);
-            return false;
+        addErrorMsg(`Descripción muy corta, por favor comenta algo más de la mascota.`);
+        description.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // Photo upload validation
@@ -414,20 +443,30 @@ const validateForm = () => {
 
             // Validate file type
             if (!file.type.startsWith('image/')) {
-                setErrorMsg(`Foto ${i+1} inválida, debe ser una imágen.`);
-                return false;
+                addErrorMsg(`Foto ${i+1} inválida, debe ser una imágen.`);
+                photoInput.classList.add('form-error-indicator');
+                validForm = false;
             }
         }
     }
 
     // At least one photo to validate
+    let photoDiv = document.getElementById('form-photos-container');
     if (nPhotos < 1) {
-        setErrorMsg(`Ingresa al menos una foto.`)
-        return false;
+        addErrorMsg(`Ingresa al menos una foto.`)
+        photoDiv.classList.add('form-error-indicator');
+        validForm = false;
     }
 
     // All validations passed
-    return true;
+    if (validForm) {
+        return true;
+    } else {
+        let errorDiv = document.getElementById("form-error");
+        errorDiv.hidden = false;
+        return false
+    }
+        
 };
 
 // Assign event to submit button

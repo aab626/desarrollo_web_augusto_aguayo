@@ -31,19 +31,19 @@
     
                     <div class="form-row">
                         <label class="form-label" for="form-region-select">Región</label>
-                        <select class="form-input" id="form-region-select" required>
+                        <select class="form-input" id="form-region-select" name="region" required>
                         </select>
                     </div>
     
                     <div class="form-row">
                         <label class="form-label" for="form-commune-select">Comuna</label>
-                        <select class="form-input" id="form-commune-select" required>
+                        <select class="form-input" id="form-commune-select" name="commune" required>
                         </select>
                     </div>
     
                     <div class="form-row">
                         <label class="form-label" for="form-sector-input">Sector</label>
-                        <input class="form-input" type="text" id="form-sector-input" maxlength="100" required/>
+                        <input class="form-input" type="text" id="form-sector-input" name="sector" maxlength="100" required/>
                     </div>
                 </fieldset>
     
@@ -53,17 +53,17 @@
     
                     <div class="form-row">
                         <label class="form-label" for="form-name">Nombre</label>
-                        <input class="form-input" type="text" id="form-name" minlength="3" maxlength="200" required/>
+                        <input class="form-input" type="text" id="form-name" name="name" minlength="3" maxlength="200" required/>
                     </div>
                 
                     <div class="form-row">
                         <label class="form-label" for="form-email">Email</label>
-                        <input class="form-input" type="email" id="form-email" maxlength="100" required/>
+                        <input class="form-input" type="email" id="form-email" name="email" maxlength="100" required/>
                     </div>
                 
                     <div class="form-row">
                         <label class="form-label" for="form-phone">Número de Celular</label>
-                        <input class="form-input" type="tel" id="form-phone" minlength="13" maxlength="13" placeholder="Ejemplo: +569.12345678" required/>
+                        <input class="form-input" type="tel" id="form-phone" name="phone" minlength="13" maxlength="13" placeholder="Ejemplo: +569.12345678" required/>
                     </div>
     
                     <div class="contact-methods">
@@ -81,7 +81,7 @@
     
                     <div class="form-row">
                         <label class="form-label" for="form-type">Tipo</label>
-                        <select class="form-input" id="form-type" required>
+                        <select class="form-input" id="form-type" name="type" required>
                             <option disabled selected value="">--- SELECCIONE TIPO ---</option>
                             <option value="gato">Gato</option>
                             <option value="perro">Perro</option>
@@ -90,14 +90,14 @@
     
                     <div class="form-row">
                         <label class="form-label" for="form-quantity">Cantidad</label>
-                        <input class="form-input" type="number" id="form-quantity" min="1" required/>
+                        <input class="form-input" type="number" id="form-quantity" name="quantity" min="1" required/>
                     </div>
     
                     <div class="form-row age-row">
                         <label class="form-label" for="form-age-quantity">Edad</label>
-                        <input class="form-input age-input" type="number" id="form-age-quantity" min="1" required/>
+                        <input class="form-input age-input" type="number" id="form-age-quantity" name="age-quantity" min="1" required/>
     
-                        <select class="form-input age-units" id="form-age-units" required>
+                        <select class="form-input age-units" id="form-age-units" name="age-unit" required>
                             <option disabled selected value="">--- SELECCIONE UNIDAD ---</option>
                             <option value="meses">Meses</option>
                             <option value="annos">Años</option>
@@ -106,24 +106,23 @@
     
                     <div class="form-row">
                         <label class="form-label" for="form-deliverytime">Fecha disponible de Entrega</label>
-                        <input class="form-input" type="datetime-local" id="form-deliverytime" required/>
+                        <input class="form-input" type="datetime-local" id="form-deliverytime" name="delivery-time" required/>
                     </div>
     
                     <div class="form-row">
                         <label class="form-label" for="form-description">Descripción</label>
-                        <textarea class="form-input form-textarea" id="form-description" rows="10" cols="50" placeholder="Descripción de las mascotas" required></textarea>
+                        <textarea class="form-input form-textarea" id="form-description" name="description" rows="10" cols="50" placeholder="Descripción de las mascotas" required></textarea>
                     </div>
     
                     <div class="photos-section">
                         <label class="section-subheading">Fotos</label>
-                        <div id="form-photos-container" class="photos-container">
-                        </div>
+                        <div id="form-photos-container" class="photos-container"></div>
                     </div>
                 </fieldset>
 
                 <div class="form-messages">
                     <div id="form-error" class="error-message" hidden>
-                        <p id="form-error-msg" class="error-text"></p>
+                        <!-- <p id="form-error-msg" class="error-text"></p> -->
                     </div>
 
                     <div id="form-success" class="success-message" hidden>

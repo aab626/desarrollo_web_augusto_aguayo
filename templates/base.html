@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Sistema de Adopciones | {% block title %}{% endblock %}</title>
+    <!-- <link rel="stylesheet" href="style/style.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="site-header">
+            <h1 class="site-title">Sistema de Adopciones</h1>
+
+            <nav class="main-nav">
+                <button type="button" class="nav-btn" id="btn-nav-inicio">Inicio</button>
+                <button type="button" class="nav-btn" id="btn-nav-addpost">Agregar aviso</button>
+                <button type="button" class="nav-btn" id="btn-nav-listings">Ver listado</button>
+                <button type="button" class="nav-btn" id="btn-nav-statistics">Ver estadísticas</button>
+            </nav>
+        </header>
+
+        <!-- Contents -->
+        <main class="main-content">
+            {% block main_content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    {% block body_scripts %}{% endblock %}
+</body>
+
+</html>

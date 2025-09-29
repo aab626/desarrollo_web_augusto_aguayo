@@ -6,17 +6,17 @@ let navBtnStatistics = document.getElementById("btn-nav-statistics");
 
 // Event linking
 navBtnIndex.addEventListener("click", (event) => {
-    window.location.href = "index.html"
+    window.location.href = "/"
 });
 
 navBtnAddPost.addEventListener("click", (event) => {
-    window.location.href = "newpost.html"
+    window.location.href = "add_post"
 });
 
 navBtnListings.addEventListener("click", (event) => {
-    window.location.href = "listings.html"
+    window.location.href = "listings"
 });
 
 navBtnStatistics.addEventListener("click", (event) => {
-    window.location.href = "statistics.html"
+    window.location.href = "statistics"
 });

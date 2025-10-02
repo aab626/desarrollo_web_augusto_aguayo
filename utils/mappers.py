@@ -51,7 +51,3 @@ def map_adoption_listing(listing) -> dict:
     }
 
     return mapping
-
-# Structures region/municipality db output to json js-ready data
-def jsonify_region_municipality_data(regions, municipalities):
-    print(regions)

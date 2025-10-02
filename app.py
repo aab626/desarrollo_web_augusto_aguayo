@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 from database import db
 from utils.validations import validate_listing
 
@@ -21,7 +21,9 @@ def index():
 @app.route('/new_listing', methods=['GET'])
 def new_listing():
     if request.method == 'GET':
-        return render_template('new_listing.html')
+        return render_template('new_listing.html',
+                               regions_data=db.get_regions_data()
+                               )
     
 # POST method that receives a form, tries to validate and save it into the db
 @app.route('/add_listing', methods=['POST'])
@@ -48,8 +50,6 @@ def statistics():
 
 @app.route('/test', methods=['GET'])
 def test_id(id=None):
-    r = db.get_all_regions()
-    print(r[0])
     return "test"
 
 # Execute application

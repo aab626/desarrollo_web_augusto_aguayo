@@ -7,68 +7,54 @@ const PET_TYPES = ["perro", "gato"];
 const PET_AGE_UNITS = ['meses', 'annos'];
 const MIN_DELIVERY_TIME = new Date(Date.now() + (3 * 60 * 60 * 1000));;
 
-// Fetch region/commune data
+// Set region options
 let regionSelect = document.getElementById("form-region-select");
+let option = document.createElement('option');
+option.textContent = DEFAULT_OPTION_REGION;
+option.value = "";
+option.disabled = true;
+option.selected = true;
+regionSelect.appendChild(option);
+
+regionsData.forEach(region => {
+    option = document.createElement('option');
+    option.textContent = region.region;
+    option.value = region.region;
+    regionSelect.appendChild(option);
+});
+
+// Update commune options
 let communeSelect = document.getElementById("form-commune-select");
+communeSelect.disabled = true;
+let startOption = document.createElement('option');
+startOption.textContent = DEFAULT_OPTION_REGION;
+startOption.value = "";
+startOption.disabled = true;
+startOption.selected = true;
+communeSelect.appendChild(startOption);
 
-let regionsDataURL = 'https://gist.githubusercontent.com/juanbrujo/0fd2f4d126b3ce5a95a7dd1f28b3d8dd/raw/b8575eb82dce974fd2647f46819a7568278396bd/comunas-regiones.json'
-let regionsData = null;
+regionSelect.addEventListener("change", (event) => {
+    // Default selected
+    communeSelect.innerHTML = '';
+    let communes = regionsData.find((r) => { return r.region == event.target.value }).comunas;
+    let option = document.createElement('option');
+    option.textContent = DEFAULT_OPTION_COMMUNE;
+    option.value = "";
+    option.disabled = true;
+    option.selected = true;
+    communeSelect.appendChild(option);
 
-fetch(regionsDataURL)
-    .then(response => response.json())
-    .then(data => {
-        regionsData = data.regiones;
-
-        // Place region options
-        let option = document.createElement('option');
-        option.textContent = DEFAULT_OPTION_REGION;
-        option.value = "";
-        option.disabled = true;
-        option.selected = true;
-        regionSelect.appendChild(option);
-
-        regionsData.forEach(region => {
-            option = document.createElement('option');
-            option.textContent = region.region;
-            option.value = region.region;
-            regionSelect.appendChild(option);
-        });
-
-        // Update commune options
-        communeSelect.disabled = true;
-        let startOption = document.createElement('option');
-        startOption.textContent = DEFAULT_OPTION_REGION;
-        startOption.value = "";
-        startOption.disabled = true;
-        startOption.selected = true;
-        communeSelect.appendChild(startOption);
-
-        regionSelect.addEventListener("change", (event) => {
-            // Default selected
-            communeSelect.innerHTML = '';
-            let communes = regionsData.find((r) => {return r.region == event.target.value}).comunas;
-            let option = document.createElement('option');
-            option.textContent = DEFAULT_OPTION_COMMUNE;
-            option.value = "";
-            option.disabled = true;
-            option.selected = true;
-            communeSelect.appendChild(option);
-        
-            communes.forEach((commune) => {
-                option = document.createElement('option');
-                option.textContent = commune;
-                option.value = commune;
-                communeSelect.appendChild(option);
-            });
-
-            communeSelect.disabled = false;
-
-        });
-
-    })
-    .catch(error => {
-        console.error('Error al descargar data de regiones:', error);
+    communes.forEach((commune) => {
+        option = document.createElement('option');
+        option.textContent = commune;
+        option.value = commune;
+        communeSelect.appendChild(option);
     });
+
+    communeSelect.disabled = false;
+
+});
+
 
 // Add contact method inputs
 let contactMethodContainer = document.getElementById("form-contact-methods-container");

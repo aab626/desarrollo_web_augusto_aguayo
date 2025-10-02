@@ -135,5 +135,6 @@
 {% endblock %}
 
 {% block body_scripts %}
+<script>const regionsData = {{ regions_data | tojson}};</script>
 <script src="{{ url_for('static', filename='js/newpost-form-handler.js') }}"></script>
 {% endblock %}

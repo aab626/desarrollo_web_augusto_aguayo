@@ -101,6 +101,19 @@ def get_all_municipalities_by_region_id(id: int):
 
     return municipalities
 
+def get_regions_data():
+    regions_data = []
+    for region in get_all_regions():
+        region_dict = dict()
+        region_dict['region'] = region.nombre
+
+        municipalities = get_all_municipalities_by_region_id(region.id)
+        region_dict['comunas'] = [m.nombre for m in municipalities]
+
+        regions_data.append(region_dict)
+
+    return regions_data
+
 
 def get_listing_by_id(id: int):
     session = SessionLocal()

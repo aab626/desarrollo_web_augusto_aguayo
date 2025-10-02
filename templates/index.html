@@ -23,7 +23,6 @@
     </thead>
     <tbody>
         {% for listing in listings %}
-        {{ listing }}
 
         <tr class="table-row">
             <td class="table-cell date-cell">{{ listing.date_input }}</td>
@@ -40,70 +39,10 @@
                     {% endif %}
                 </div>
             </td>
-            <td class="table-cell photo-cell"><img src="images/photos/2cats.jpg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+            <td class="table-cell photo-cell"><img src="{{ url_for('static', filename='uploads/' ~ photo_dict[listing.id].nombre_archivo) }}" width="200" alt="Imagen del aviso" class="pet-photo"></td>
         </tr>
 
         {% endfor %}
-
-<!--         <tr class="table-row">
-            <td class="table-cell date-cell">2025-08-21 12:00</td>
-            <td class="table-cell">Santiago</td>
-            <td class="table-cell">Blanco Encalada 2007</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">2 gatos</div>
-                <div class="pet-age">3 años</div>
-            </td>
-            <td class="table-cell photo-cell"><img src="images/photos/2cats.jpg" width="200" alt="Imagen del aviso"
-                    class="pet-photo"></td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-08-18 13:13</td>
-            <td class="table-cell">Santiago</td>
-            <td class="table-cell">Beauchef 851, DCC</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">1 Panda rojo</div>
-                <div class="pet-age">3 años</div>
-            </td>
-            <td class="table-cell photo-cell"><img src="images/photos/anakena.jpeg" width="200"
-                    alt="Imagen del aviso" class="pet-photo"></td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-08-13 04:21</td>
-            <td class="table-cell">Recoleta</td>
-            <td class="table-cell">Recoleta 1024</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">1 gato</div>
-                <div class="pet-age">2 años</div>
-            </td>
-            <td class="table-cell photo-cell"><img src="images/photos/zazu.jpg" width="200" alt="Imagen del aviso"
-                    class="pet-photo"></td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-08-10 12:21</td>
-            <td class="table-cell">Independencia</td>
-            <td class="table-cell">Independencia 2048</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">4 gatos</div>
-                <div class="pet-age">3 meses</div>
-            </td>
-            <td class="table-cell photo-cell"><img src="images/photos/4cats.jpg" width="200" alt="Imagen del aviso"
-                    class="pet-photo"></td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-08-03 18:59</td>
-            <td class="table-cell">Independencia</td>
-            <td class="table-cell">Independencia 4096</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">3 gatos</div>
-                <div class="pet-age">6 meses</div>
-            </td>
-            <td class="table-cell photo-cell"><img src="images/photos/3cats.jpg" width="200" alt="Imagen del aviso"
-                    class="pet-photo"></td>
-        </tr> -->
     </tbody>
 </table>
 {% endblock %}

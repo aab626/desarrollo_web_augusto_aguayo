@@ -159,6 +159,16 @@ def get_last_listings(n: int):
     return listings_mapped
 
 
+def get_first_photo_by_listing_id(listing_id: int):
+    with SessionLocal() as session:
+        photo = (
+            session.query(Photo)
+            .filter_by(actividad_id=listing_id)
+            .first()
+        )
+
+        return photo
+
 def create_listing(form):
     with SessionLocal() as session:
         age_units_raw = form.get(listingFields.FIELD_PET_AGE_UNITS)

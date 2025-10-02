@@ -19,8 +19,9 @@ app.config['UPLOAD_FOLDER'] = Path(UPLOAD_FOLDER)
 @app.route('/', methods=['GET'])
 def index():
     if request.method == 'GET':
-        listings = db.get_last_listings(LISTINGS_IN_INDEX)
-        return render_template('index.html', listings=listings)
+        last_listings = db.get_last_listings(LISTINGS_IN_INDEX)
+        last_listings_photo = {l.get('id'): db.get_first_photo_by_listing_id(l.get('id')) for l in last_listings}
+        return render_template('index.html', listings=last_listings, photo_dict=last_listings_photo)
     
 # New post form
 @app.route('/new_listing', methods=['GET'])

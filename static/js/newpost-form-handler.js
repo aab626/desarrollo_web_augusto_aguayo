@@ -1,6 +1,6 @@
 // Constants
 const DEFAULT_OPTION_REGION = "--- SELECCIONE REGIÓN ---";
-const DEFAULT_OPTION_COMMUNE = "--- SELECCIONE COMUNA ---";
+const DEFAULT_OPTION_MUNICIPALITY = "--- SELECCIONE COMUNA ---";
 const DEFAULT_OPTION_CONTACT_METHOD = '--- SELECCIONE MÉTODO ---';
 const CONTACT_METHODS = [DEFAULT_OPTION_CONTACT_METHOD, 'WhatsApp', 'Telegram', 'X', 'Instagram', 'TikTok', 'Otra'];
 const PET_TYPES = ["perro", "gato"];
@@ -23,35 +23,35 @@ regionsData.forEach(region => {
     regionSelect.appendChild(option);
 });
 
-// Update commune options
-let communeSelect = document.getElementById("form-commune-select");
-communeSelect.disabled = true;
+// Update municipality options
+let municipalitySelect = document.getElementById("form-municipality-select");
+municipalitySelect.disabled = true;
 let startOption = document.createElement('option');
 startOption.textContent = DEFAULT_OPTION_REGION;
 startOption.value = "";
 startOption.disabled = true;
 startOption.selected = true;
-communeSelect.appendChild(startOption);
+municipalitySelect.appendChild(startOption);
 
 regionSelect.addEventListener("change", (event) => {
     // Default selected
-    communeSelect.innerHTML = '';
-    let communes = regionsData.find((r) => { return r.region == event.target.value }).comunas;
+    municipalitySelect.innerHTML = '';
+    let municipalities = regionsData.find((r) => { return r.region == event.target.value }).comunas;
     let option = document.createElement('option');
-    option.textContent = DEFAULT_OPTION_COMMUNE;
+    option.textContent = DEFAULT_OPTION_MUNICIPALITY;
     option.value = "";
     option.disabled = true;
     option.selected = true;
-    communeSelect.appendChild(option);
+    municipalitySelect.appendChild(option);
 
-    communes.forEach((commune) => {
+    municipalities.forEach((municipality) => {
         option = document.createElement('option');
-        option.textContent = commune;
-        option.value = commune;
-        communeSelect.appendChild(option);
+        option.textContent = municipality;
+        option.value = municipality;
+        municipalitySelect.appendChild(option);
     });
 
-    communeSelect.disabled = false;
+    municipalitySelect.disabled = false;
 
 });
 
@@ -294,17 +294,17 @@ const validateForm = () => {
         validForm = false;
     }
 
-    // Validate commune
+    // Validate municipality
     let allComunnes = regionsData.map((x) => { return x.comunas; }).flat();
-    let communeSelect = document.getElementById("form-commune-select");
-    if (!allComunnes.includes(communeSelect.value)) {
+    let municipalitySelect = document.getElementById("form-municipality-select");
+    if (!allComunnes.includes(municipalitySelect.value)) {
         addErrorMsg("Comuna inválida.")
-        communeSelect.classList.add('form-error-indicator');
+        municipalitySelect.classList.add('form-error-indicator');
         validForm = false;
     }
 
-    // Validate region-commune combination
-    if (!regionsData.find((r) => { return r.region == regionSelect.value; }).comunas.includes(communeSelect.value)) {
+    // Validate region-municipality combination
+    if (!regionsData.find((r) => { return r.region == regionSelect.value; }).comunas.includes(municipalitySelect.value)) {
         addErrorMsg("Comuna no pertenece a Región.")
         regionsData.classList.add('form-error-indicator');
         regionSelect.classList.add('form-error-indicator');

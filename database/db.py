@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, Text
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from utils import mappers
+import utils.fieldnames.new_listing as listingFields
+from datetime import datetime
 
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002"
@@ -90,11 +92,33 @@ def get_all_regions():
     
     return regions
 
+def get_municipality_by_name(name: str):
+    with SessionLocal() as session:
+        municipality = (
+            session.query(Municipality)
+            .filter_by(nombre = name)
+            .first()
+        )
+    
+    return municipality
+
 def get_all_municipalities_by_region_id(id: int):
     with SessionLocal() as session:
         municipalities = (
             session.query(Municipality)
-            .filter_by(region_id=id)
+            .filter_by(region_id = id)
+            .order_by(Municipality.nombre.asc())
+            .all()
+        )
+
+    return municipalities
+
+def get_all_municipalities_by_region_name(name: str):
+    with SessionLocal() as session:
+        municipalities = (
+            session.query(Municipality)
+            .join(Region)
+            .filter(Region.nombre == name)
             .order_by(Municipality.nombre.asc())
             .all()
         )
@@ -133,3 +157,59 @@ def get_last_listings(n: int):
         listings_mapped = [mappers.map_adoption_listing(item) for item in listings]
     
     return listings_mapped
+
+
+def create_listing(form):
+    with SessionLocal() as session:
+        age_units_raw = form.get(listingFields.FIELD_PET_AGE_UNITS)
+        new_listing = AdoptionListing(
+            fecha_ingreso=datetime.now(),
+            comuna_id = get_municipality_by_name(form.get(listingFields.FIELD_MUNICIPALITY)).id,
+            sector = form.get(listingFields.FIELD_SECTOR),
+            nombre = form.get(listingFields.FIELD_PERSON_NAME),
+            email = form.get(listingFields.FIELD_PERSON_EMAIL),
+            celular = form.get(listingFields.FIELD_PERSON_PHONE),
+            tipo = form.get(listingFields.FIELD_PET_TYPE),
+            cantidad = int(form.get(listingFields.FIELD_PET_QUANTITY)),
+            edad = int(form.get(listingFields.FIELD_PET_AGE)),
+            unidad_medida = 'm' if age_units_raw == 'meses' else 'a',
+            fecha_entrega = datetime.fromisoformat(form.get(listingFields.FIELD_DELIVERY_TIME)),
+            descripcion = form.get(listingFields.FIELD_DESCRIPTION)
+        )
+        
+        session.add(new_listing)
+        session.flush()
+        listing_id = new_listing.id
+        session.commit()
+
+    return listing_id
+
+
+def create_photo(file_route, file_name, listing_id):
+    with SessionLocal() as session:
+        new_photo = Photo(
+            ruta_archivo = file_route,
+            nombre_archivo = file_name,
+            actividad_id = listing_id
+        )
+        session.add(new_photo)
+        session.flush()
+        photo_id = new_photo.id
+        session.commit()
+
+    return photo_id
+
+
+def create_contact_method(contact_name, contact_id, listing_id):
+    with SessionLocal() as session:
+        new_contact_method = ContactMethod(
+            nombre=contact_name,
+            identificador=contact_id,
+            actividad_id = listing_id
+        )
+        session.add(new_contact_method)
+        session.flush()
+        contact_method_id = new_contact_method.id
+        session.commit()
+
+    return contact_method_id

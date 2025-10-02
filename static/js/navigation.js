@@ -10,7 +10,7 @@ navBtnIndex.addEventListener("click", (event) => {
 });
 
 navBtnAddPost.addEventListener("click", (event) => {
-    window.location.href = "add_post"
+    window.location.href = "new_listing"
 });
 
 navBtnListings.addEventListener("click", (event) => {

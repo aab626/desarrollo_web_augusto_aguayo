@@ -22,7 +22,30 @@
         </tr>
     </thead>
     <tbody>
+        {% for listing in listings %}
+        {{ listing }}
+
         <tr class="table-row">
+            <td class="table-cell date-cell">{{ listing.date_input }}</td>
+            <td class="table-cell">{{ listing.municipality.name }}</td>
+            <td class="table-cell">{{ listing.sector }}</td>
+            <td class="table-cell pet-info">
+                <div class="pet-quantity">{{ listing.quantity }} {{ listing.type }}</div>
+                <div class="pet-age">
+                    {{listing.age}}
+                    {% if listing.age == 1 %}
+                        {% if listing.age_unit == "a" %}año{% elif listing.age_unit == "m" %}mes{% else %}ERROR{% endif %}
+                    {% else %}
+                        {% if listing.age_unit == "a" %}años{% elif listing.age_unit == "m" %}meses{% else %}ERROR{% endif %}
+                    {% endif %}
+                </div>
+            </td>
+            <td class="table-cell photo-cell"><img src="images/photos/2cats.jpg" width="200" alt="Imagen del aviso" class="pet-photo"></td>
+        </tr>
+
+        {% endfor %}
+
+<!--         <tr class="table-row">
             <td class="table-cell date-cell">2025-08-21 12:00</td>
             <td class="table-cell">Santiago</td>
             <td class="table-cell">Blanco Encalada 2007</td>
@@ -80,7 +103,7 @@
             </td>
             <td class="table-cell photo-cell"><img src="images/photos/3cats.jpg" width="200" alt="Imagen del aviso"
                     class="pet-photo"></td>
-        </tr>
+        </tr> -->
     </tbody>
 </table>
 {% endblock %}

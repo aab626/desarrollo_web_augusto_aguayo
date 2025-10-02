@@ -510,6 +510,9 @@ modalYesButton.addEventListener("click", (event) => {
     // Show go back to index button
     let goBackButton = document.getElementById("form-btn-goback");
     goBackButton.hidden = false;
+
+    // Send POST form to the backend
+    form.submit();
 });
 
 modalNoButton.addEventListener('click', (event) => {

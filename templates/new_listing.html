@@ -4,7 +4,7 @@
 {% block main_content %}
 <h2 class="section-title">Publicar nuevo aviso de adopción</h2>
 
-<form id="form-newpost" class="adoption-form">
+<form id="form-newpost" class="adoption-form" action="{{url_for('add_listing')}}" method="post", enctype="multipart/form-data">
     <fieldset class="form-section location-section">
         <legend class="section-heading">Datos de ubicación</legend>
 
@@ -120,6 +120,18 @@
     </div>
 
 </form>
+{% endblock %}
+
+{% block body_modals %}
+<div id="form-confirmation-modal" class="modal" hidden>
+    <div class="modal-content">
+        <p class="modal-text">¿Está seguro que desea agregar este aviso de adopción?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="btn-form-modal-no">No, quiero volver al formulario.</button>
+            <button type="button" class="btn btn-primary" id="btn-form-modal-yes">Si, estoy seguro.</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block body_scripts %}

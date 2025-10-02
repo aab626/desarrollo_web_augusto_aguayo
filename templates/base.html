@@ -28,6 +28,9 @@
         </main>
     </div>
 
+    <!-- Modals -->
+    {% block body_modals %}{% endblock %}
+
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
     {% block body_scripts %}{% endblock %}

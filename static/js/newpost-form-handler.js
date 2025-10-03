@@ -289,7 +289,7 @@ const addErrorMsg = (errorMsg) => {
 
 // Function that validates the form
 const validateForm = () => {
-    // return true;
+    return true;
     let validForm = true;
 
     // Clean previous error msg

@@ -43,15 +43,14 @@ def new_listing():
                                regions_data=db.get_regions_data(),
                                failed_form={},
                                failed_files={},
-                               failed_validations=[]
+                               failed_validations=[],
+                               disable_selected_default=False
                                )
     
 # POST method that receives a form, tries to validate and save it into the db
 @app.route('/add_listing', methods=['GET', 'POST'])
 def add_listing():
     if request.method == 'POST':
-        # print('FORM:', request.form)
-        # print('FILES:', request.files)
         valid_status, failed_validations = validate_listing(request.form, request.files)
         if valid_status:
             img_filenames = []
@@ -84,14 +83,16 @@ def add_listing():
         
         # If not valid, show errors along with the form
         else:
-            # print(request.form)
-            # print(request.files)
-            # print(failed_validations)
+            print('FORM:', request.form)
+            print('FILES:', request.files)
+            print("valid status:", valid_status)
+            print('failed:', failed_validations)
             return render_template('new_listing.html.j2', 
                             regions_data=db.get_regions_data(),
                             failed_form=request.form.to_dict(),
                             failed_files={k: v.filename for k, v in request.files.items() if v and v.filename},
-                            failed_validations=failed_validations
+                            failed_validations=failed_validations,
+                            disable_selected_default=True
                             )
     
     elif request.method == 'GET':

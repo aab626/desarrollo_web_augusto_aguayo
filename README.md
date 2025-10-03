@@ -39,7 +39,21 @@ Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_,
 
 ## Configuración y ejecución
 
-Primero, se deben crear la db y el usuario, mediante el siguiente script SQL:
+Setup inicial, entorno virtual y dependencias:
+
+```bash
+git clone https://github.com/aab626/desarrollo_web_augusto_aguayo.git
+cd ./desarrollo_web_augusto_aguayo
+git checkout tarea-2
+```
+
+```bash
+python -m venv ./venv
+source ./venv/bin/activate
+python -m pip install -r ./requirements.txt
+```
+
+Luego, se deben crear la base de datos y el usuario, mediante el siguiente script SQL:
 
 ```sql
 -- Create database
@@ -62,4 +76,4 @@ Finalmente, se puede ejecutar la aplicación en modo depuración:
 python --debug run
 ```
 
-Por defecto, esta corre en [`http://127.0.0.1:5000`](http://127.0.0.1:5000).
+Por defecto, la aplicación corre en [`http://127.0.0.1:5000`](http://127.0.0.1:5000).

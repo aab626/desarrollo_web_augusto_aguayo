@@ -28,6 +28,7 @@ Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_,
 
 ## Notas de Implementación
 
+- Corregidos los errores de validación HTML de Tarea 1.
 - Se implementan validaciones por el lado del usuario (`js`), tanto como en backend.
 - Al encontrar un error de validación por parte del backend, al retornar al formulario se rellenan los campos con la información proporcionada a excepción de las imágenes, por limitación del comportamiento de navegadores y seguridad.
 - Si bien los campos de _Sector_ y _Descripción_ en el formulario de nuevo aviso no son obligatorios, se introdujo un límite de 2048 caracteres en la descripción para evitar posts maliciosos.

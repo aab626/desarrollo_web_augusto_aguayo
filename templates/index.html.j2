@@ -1,10 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'base.html.j2' %}
 {% block title %} Inicio {% endblock %}
 
 {% block main_content %}
+
+{% if listing_success %}
+<div class="listing-success-section">
+    <p class="listing-success-text">El aviso de adopción fue agregado correctamente!</p>
+</div>
+{% else %}
 <div class="welcome-section">
     <p class="welcome-text">Bienvenido!</p>
 </div>
+{% endif %}
 
 <h2 class="section-title">Avisos más recientes</h2>
 

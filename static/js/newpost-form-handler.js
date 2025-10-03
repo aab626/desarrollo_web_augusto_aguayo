@@ -6,32 +6,33 @@ const CONTACT_METHODS = [DEFAULT_OPTION_CONTACT_METHOD, 'WhatsApp', 'Telegram', 
 const PET_TYPES = ["perro", "gato"];
 const PET_AGE_UNITS = ['meses', 'annos'];
 const MIN_DELIVERY_TIME = new Date(Date.now() + (3 * 60 * 60 * 1000));;
+const CONTACT_METHOD_INPUT_ID_REGEX = /^form-contact-method-(\d)-input$/;
 
 // Set region options
 let regionSelect = document.getElementById("form-region-select");
-let option = document.createElement('option');
-option.textContent = DEFAULT_OPTION_REGION;
-option.value = "";
-option.disabled = true;
-option.selected = true;
-regionSelect.appendChild(option);
+// let option = document.createElement('option');
+// option.textContent = DEFAULT_OPTION_REGION;
+// option.value = "";
+// option.disabled = true;
+// option.selected = true;
+// regionSelect.appendChild(option);
 
-regionsData.forEach(region => {
-    option = document.createElement('option');
-    option.textContent = region.region;
-    option.value = region.region;
-    regionSelect.appendChild(option);
-});
+// regionsData.forEach(region => {
+//     option = document.createElement('option');
+//     option.textContent = region.region;
+//     option.value = region.region;
+//     regionSelect.appendChild(option);
+// });
 
 // Update municipality options
 let municipalitySelect = document.getElementById("form-municipality-select");
-municipalitySelect.disabled = true;
-let startOption = document.createElement('option');
-startOption.textContent = DEFAULT_OPTION_REGION;
-startOption.value = "";
-startOption.disabled = true;
-startOption.selected = true;
-municipalitySelect.appendChild(startOption);
+// municipalitySelect.disabled = true;
+// let startOption = document.createElement('option');
+// startOption.textContent = DEFAULT_OPTION_REGION;
+// startOption.value = "";
+// startOption.disabled = true;
+// startOption.selected = true;
+// municipalitySelect.appendChild(startOption);
 
 regionSelect.addEventListener("change", (event) => {
     // Default selected
@@ -55,90 +56,102 @@ regionSelect.addEventListener("change", (event) => {
 
 });
 
+regionSelect.addEventListener("DOMContentLoaded", (event) => {console.log('lo0aded');});
 
-// Add contact method inputs
-let contactMethodContainer = document.getElementById("form-contact-methods-container");
+
+// // Add contact method inputs
+// let contactMethodContainer = document.getElementById("form-contact-methods-container");
+// for (let i = 0; i < 5; i++) {
+//     // Contact Method container
+//     let div = document.createElement('div');
+//     div.className = 'contact-method-row';
+//     if (i > 0) {div.hidden = true;};
+//     div.id = `form-contact-method-${i}`;
+
+//     // Contact Method label
+//     let label = document.createElement('label');
+//     label.className = 'form-label';
+//     label.htmlFor = `form-contact-method-${i}-select`;
+//     label.textContent = `Método ${i+1}`;
+//     div.appendChild(label);
+
+//     // Contact Method select element
+//     let select = document.createElement('select');
+//     select.className = 'form-input';
+//     select.id = `form-contact-method-${i}-select`;
+//     select.name = `contact-method-${i}`;
+//     CONTACT_METHODS.forEach((contactMethod) => {
+//         // const CONTACT_METHODS = [DEFAULT_OPTION_CONTACT_METHOD, 'WhatsApp', 'Telegram', 'X', 'Instagram', 'TikTok', 'Otra'];
+//         let option = document.createElement('option');
+//         option.textContent = contactMethod;
+//         option.value = contactMethod;
+//         select.appendChild(option);
+//     });
+
+//     // Make first element (placeholder) unselectable
+//     select.childNodes[0].disabled = true;
+//     select.childNodes[0].selected = true;
+//     select.childNodes[0].value = '';
+
+//     // Hide/show the input field when a contact method is selected
+//     select.addEventListener('change', (event) => {
+//         let thisInput = document.getElementById(`form-contact-method-${i}-input`);
+//         thisInput.hidden = false;
+//     });
+
+//     div.appendChild(select);
+
+//     // Contact method input field
+//     let input = document.createElement('input');
+//     input.className = 'form-input';
+//     input.id = `form-contact-method-${i}-input`;
+//     input.name = `contact-id-${i}`;
+//     input.hidden = true;
+//     input.minLength = '4'
+//     input.maxLength = '50';
+//     input.placeholder = 'Número, ID o URL';
+//     input.required = i>0 ? false : true;
+//     div.appendChild(input);
+
+//     // Contact method plus/minus buttons container
+//     let divControls = document.createElement('div');
+//     divControls.className = 'contact-method-controls';
+//     divControls.id = `form-contact-method-${i}-controls`;
+//     div.appendChild(divControls);
+
+//     // Plus button, only for the first 4 contact methods
+//     if (i < 4) {
+//         let plusButton = document.createElement('button');
+//         plusButton.className = 'btn btn-small btn-add';
+//         plusButton.type = 'button';
+//         plusButton.textContent = '+';
+//         plusButton.id = `btn-method-${i}-plus`;
+//         divControls.appendChild(plusButton);
+//     }
+
+//     // Minus button, only for the last 4 contact methods
+//     if (i > 0) {
+//         let minusButton = document.createElement('button');
+//         minusButton.className = 'btn btn-small btn-remove';
+//         minusButton.type = 'button';
+//         minusButton.textContent = '-';
+//         minusButton.id = `btn-method-${i}-minus`;
+
+
+
+//         divControls.appendChild(minusButton);
+//     }
+
+//     contactMethodContainer.appendChild(div);
+// }
+
+// Hide/show the input field when a contact method is selected
 for (let i = 0; i < 5; i++) {
-    // Contact Method container
-    let div = document.createElement('div');
-    div.className = 'contact-method-row';
-    if (i > 0) {div.hidden = true;};
-    div.id = `form-contact-method-${i}`;
-    
-    // Contact Method label
-    let label = document.createElement('label');
-    label.className = 'form-label';
-    label.htmlFor = `form-contact-method-${i}-select`;
-    label.textContent = `Método ${i+1}`;
-    div.appendChild(label);
-
-    // Contact Method select element
-    let select = document.createElement('select');
-    select.className = 'form-input';
-    select.id = `form-contact-method-${i}-select`;
-    select.name = `contact-method-${i}`;
-    CONTACT_METHODS.forEach((contactMethod) => {
-        let option = document.createElement('option');
-        option.textContent = contactMethod;
-        option.value = contactMethod;
-        select.appendChild(option);
-    });
-
-    // Make first element (placeholder) unselectable
-    select.childNodes[0].disabled = true;
-    select.childNodes[0].selected = true;
-    select.childNodes[0].value = '';
-
-    // Hide/show the input field when a contact method is selected
+    let select = document.getElementById(`form-contact-method-${i}-select`)
     select.addEventListener('change', (event) => {
         let thisInput = document.getElementById(`form-contact-method-${i}-input`);
         thisInput.hidden = false;
-    });
-
-    div.appendChild(select);
-
-    // Contact method input field
-    let input = document.createElement('input');
-    input.className = 'form-input';
-    input.id = `form-contact-method-${i}-input`;
-    input.name = `contact-id-${i}`;
-    input.hidden = true;
-    input.minLength = '4'
-    input.maxLength = '50';
-    input.placeholder = 'Número, ID o URL';
-    input.required = i>0 ? false : true;
-    div.appendChild(input);
-
-    // Contact method plus/minus buttons container
-    let divControls = document.createElement('div');
-    divControls.className = 'contact-method-controls';
-    divControls.id = `form-contact-method-${i}-controls`;
-    div.appendChild(divControls);
-
-    // Plus button, only for the first 4 contact methods
-    if (i < 4) {
-        let plusButton = document.createElement('button');
-        plusButton.className = 'btn btn-small btn-add';
-        plusButton.type = 'button';
-        plusButton.textContent = '+';
-        plusButton.id = `btn-method-${i}-plus`;
-        divControls.appendChild(plusButton);
-    }
-
-    // Minus button, only for the last 4 contact methods
-    if (i > 0) {
-        let minusButton = document.createElement('button');
-        minusButton.className = 'btn btn-small btn-remove';
-        minusButton.type = 'button';
-        minusButton.textContent = '-';
-        minusButton.id = `btn-method-${i}-minus`;
-
-        
-
-        divControls.appendChild(minusButton);
-    }
-    
-    contactMethodContainer.appendChild(div);
+    });    
 }
 
 // After creating all contact method elements, add functionality to the plus/minus buttons
@@ -203,42 +216,44 @@ function formatLocalDateTime(date) {
 // Set the starting value of the delivery time field to now plus 3 hours
 let deliveryTimeInput = document.getElementById('form-deliverytime');
 // let timeStart = new Date(Date.now() + (3 * 60 * 60 * 1000));
-deliveryTimeInput.value = formatLocalDateTime(MIN_DELIVERY_TIME);
+if (deliveryTimeInput.value == "") {
+    deliveryTimeInput.value = formatLocalDateTime(MIN_DELIVERY_TIME);
+}
 
 // Add photo buttons
-let photosContainer = document.getElementById("form-photos-container");
-for (i = 0; i < 5; i++) {
-    let div = document.createElement('div');
-    div.className = 'photo-row';
-    div.id = `form-photo-${i}`;
-    div.hidden = i > 0 ? true : false;
+// let photosContainer = document.getElementById("form-photos-container");
+// for (i = 0; i < 5; i++) {
+//     let div = document.createElement('div');
+//     div.className = 'photo-row';
+//     div.id = `form-photo-${i}`;
+//     div.hidden = i > 0 ? true : false;
 
-    let label = document.createElement('label');
-    label.className = 'form-label';
-    label.htmlFor = `form-photo-${i}-input`;
-    label.textContent = `Foto ${i+1}`;
-    div.appendChild(label);
+//     let label = document.createElement('label');
+//     label.className = 'form-label';
+//     label.htmlFor = `form-photo-${i}-input`;
+//     label.textContent = `Foto ${i+1}`;
+//     div.appendChild(label);
 
-    let selectFileInput = document.createElement('input');
-    selectFileInput.type = "file";
-    selectFileInput.className = 'form-input photo-input';
-    selectFileInput.id = `form-photo-${i}-input`;
-    selectFileInput.name = `photo-${i}`;
-    selectFileInput.accept = "image/*";
-    div.appendChild(selectFileInput);
+//     let selectFileInput = document.createElement('input');
+//     selectFileInput.type = "file";
+//     selectFileInput.className = 'form-input photo-input';
+//     selectFileInput.id = `form-photo-${i}-input`;
+//     selectFileInput.name = `photo-${i}`;
+//     selectFileInput.accept = "image/*";
+//     div.appendChild(selectFileInput);
 
-    if (i < 4) {
-        let morePhotosButton = document.createElement('button');
-        morePhotosButton.className = 'btn btn-secondary btn-small';
-        morePhotosButton.id = `form-photo-${i}-more-button`;
-        morePhotosButton.type = 'button';
-        morePhotosButton.hidden = true;
-        morePhotosButton.textContent = 'Agregar otra foto';
-        div.appendChild(morePhotosButton);
-    }
+//     if (i < 4) {
+//         let morePhotosButton = document.createElement('button');
+//         morePhotosButton.className = 'btn btn-secondary btn-small';
+//         morePhotosButton.id = `form-photo-${i}-more-button`;
+//         morePhotosButton.type = 'button';
+//         morePhotosButton.hidden = true;
+//         morePhotosButton.textContent = 'Agregar otra foto';
+//         div.appendChild(morePhotosButton);
+//     }
 
-    photosContainer.appendChild(div);
-}
+//     photosContainer.appendChild(div);
+// }
 
 // Add functionality to morePhotosButtons
 for (let i = 0; i < 4; i++) {
@@ -274,6 +289,7 @@ const addErrorMsg = (errorMsg) => {
 
 // Function that validates the form
 const validateForm = () => {
+    // return true;
     let validForm = true;
 
     // Clean previous error msg
@@ -284,6 +300,12 @@ const validateForm = () => {
     console.log(erroredElements);
     erroredElements.forEach(element => {
         element.classList.remove('form-error-indicator');
+    });
+
+    erroredElements.forEach(element => {
+        element.addEventListener("change", (event) => {
+            element.classList.remove('form-error-indicator');
+        });
     });
     
     // Validate region
@@ -508,4 +530,23 @@ modalNoButton.addEventListener('click', (event) => {
 let goBackButton = document.getElementById("form-btn-goback");
 goBackButton.addEventListener('click', (event) => {
     window.location.href = "index.html"
+});
+
+// Remove error indicator when changed
+let erroredElements = document.querySelectorAll('.form-error-indicator');
+erroredElements.forEach(element => {
+    element.addEventListener("change", (event) => {
+        element.classList.remove('form-error-indicator');
+    });
+    
+    // For contact method input fields, also remove error indicator from method select field
+    const match = element.id.match(CONTACT_METHOD_INPUT_ID_REGEX);
+    if (match) {
+        element.addEventListener("change", (event) => {
+            const i = Number(match[1]);
+            contactMethodSelect = document.getElementById(`form-contact-method-${i}-select`);
+            contactMethodSelect.classList.remove('form-error-indicator');
+            console.log(element, contactMethodSelect);
+        });       
+    }
 });

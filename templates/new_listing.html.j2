@@ -1,0 +1,332 @@
+{% extends 'base.html.j2' %}
+{% block title %} Nuevo Aviso {% endblock %}
+
+{% block main_content %}
+{# {{ failed_form }} #}
+{# {{ failed_files }} #}
+{# {{ failed_validations }} #}
+
+<h2 class="section-title">Publicar nuevo aviso de adopción</h2>
+
+{# Backend validation error display #}
+{% if failed_validation|length > 0 %}
+    <div class="form-messages">
+        <h3 class="">Se encontraron errores en el formulario</h3>
+        <div id="form-error" class="error-message">
+            {% for failed_validation in failed_validations %}
+                {% if failed_validation == 'validate_region' %}<p id="form-error-msg" class="error-text">Región inválida.</p>{% endif %}
+                {% if failed_validation == 'validate_municipality' %}<p id="form-error-msg" class="error-text">Comuna inválida.</p>{% endif %}
+                {% if failed_validation == 'validate_sector' %}<p id="form-error-msg" class="error-text">Nombre de sector muy largo, no debe exceder 100 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_name' %}<p id="form-error-msg" class="error-text">Nombre debe contener entre 3 y 200 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_email' %}<p id="form-error-msg" class="error-text">Email inválido.</p>{% endif %}
+                {% if failed_validation == 'validate_phone' %}<p id="form-error-msg" class="error-text">Número de teléfono inválido.</p>{% endif %}
+                {% if failed_validation == 'validate_contact_method_count' %}<p id="form-error-msg" class="error-text">Agregue al menos un método de contacto.</p>{% endif %}
+                {% if failed_validation == 'validate_contact_method-0' %}<p id="form-error-msg" class="error-text">Debe agregar algún Numero/ID/URL para el método de contacto 1 entre 3 y 200 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_contact_method-1' %}<p id="form-error-msg" class="error-text">Debe agregar algún Numero/ID/URL para el método de contacto 2 entre 3 y 200 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_contact_method-2' %}<p id="form-error-msg" class="error-text">Debe agregar algún Numero/ID/URL para el método de contacto 3 entre 3 y 200 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_contact_method-3' %}<p id="form-error-msg" class="error-text">Debe agregar algún Numero/ID/URL para el método de contacto 4 entre 3 y 200 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_contact_method-4' %}<p id="form-error-msg" class="error-text">Debe agregar algún Numero/ID/URL para el método de contacto 5 entre 3 y 200 caractéres.</p>{% endif %}
+                {% if failed_validation == 'validate_pet_type' %}<p id="form-error-msg" class="error-text">Tipo de mascota inválido.</p>{% endif %}
+                {% if failed_validation == 'validate_pet_quantity' %}<p id="form-error-msg" class="error-text">Cantidad de mascota inválida, debe ser un número mayor o igual a 1.</p>{% endif %}
+                {% if failed_validation == 'validate_pet_age' %}<p id="form-error-msg" class="error-text">Edad de mascota inválida, debe ser un número mayor o igual a 1.</p>{% endif %}
+                {% if failed_validation == 'validate_pet_age_unit' %}<p id="form-error-msg" class="error-text">Unidad de edad inválida.</p>{% endif %}
+                {% if failed_validation == 'validate_delivery_time' %}<p id="form-error-msg" class="error-text">Fecha de entrega inválida.</p>{% endif %}
+                {% if failed_validation == 'validate_description' %}<p id="form-error-msg" class="error-text">Descripción muy corta, por favor comenta algo más de la mascota.</p>{% endif %}
+                {% if failed_validation == 'validate_image_count' %}<p id="form-error-msg" class="error-text">Se debe ingresar al menos una foto.</p>{% endif %}
+                {% if failed_validation == 'validate_images' %}<p id="form-error-msg" class="error-text">Se ha detectado una imágen inválida.</p>{% endif %}
+                {% if failed_validation == 'validate_image-0' %}<p id="form-error-msg" class="error-text">La imágen 1:"{{ failed_files.get('photo-0', '') }}" no es válida.</p>{% endif %}
+                {% if failed_validation == 'validate_image-1' %}<p id="form-error-msg" class="error-text">La imágen 2:"{{ failed_files.get('photo-1', '') }}" no es válida.</p>{% endif %}
+                {% if failed_validation == 'validate_image-2' %}<p id="form-error-msg" class="error-text">La imágen 3:"{{ failed_files.get('photo-2', '') }}" no es válida.</p>{% endif %}
+                {% if failed_validation == 'validate_image-3' %}<p id="form-error-msg" class="error-text">La imágen 4:"{{ failed_files.get('photo-3', '') }}" no es válida.</p>{% endif %}
+                {% if failed_validation == 'validate_image-4' %}<p id="form-error-msg" class="error-text">La imágen 5:"{{ failed_files.get('photo-4', '') }}" no es válida.</p>{% endif %}
+            {% endfor%}
+        </div>
+    </div>
+{% endif %}
+
+
+<form id="form-newpost" class="adoption-form" action="{{url_for('add_listing')}}" method="post", enctype="multipart/form-data">
+    <fieldset class="form-section location-section">
+        <legend class="section-heading">Datos de ubicación</legend>
+
+        <div class="form-row">
+            <label class="form-label" for="form-region-select">Región</label>
+            <select 
+                class="form-input{% if 'validate_region' in failed_validations %} form-error-indicator{% endif %}"
+                id="form-region-select" 
+                name="region" 
+                value="{{ failed_form.get('region', '')}}" 
+                required
+            >
+                <option value="" disabled selected>--- SELECCIONE REGIÓN ---</option>
+                {% for region_data in regions_data %}
+                    <option value="{{region_data.region}}"
+                            {% if region_data.region == failed_form.get('region', '') %}selected{% endif %}
+                            >
+                        
+                        {{region_data.region}}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-municipality-select" value="{{failed_form.get('comuna', '')}}">Comuna</label>
+            
+            <select 
+                class="form-input{% if 'validate_municipality' in failed_validations %} form-error-indicator{% endif %}" 
+                id="form-municipality-select" name="municipality" required>
+
+                <option value="" disabled selected>--- SELECCIONE COMUNA ---</option>
+                {% if failed_form.get('region', '') != '' %}
+                    {% for region_data in regions_data %}
+                        {% if region_data.region == failed_form.get('region', '') %}
+                            {% for municipality in region_data.comunas %}
+                                <option value="{{municipality}}"
+                                        {% if municipality == failed_form.get('municipality', '') %}selected{% endif %}
+                                >
+                                    {{municipality}}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-sector-input">Sector</label>
+            <input 
+                class="form-input{% if 'validate_sector' in failed_validations %} form-error-indicator{% endif %}" 
+                type="text" id="form-sector-input" 
+                name="sector" maxlength="100" required 
+                value="{{failed_form.get('sector', '')}}"
+            />
+        </div>
+    </fieldset>
+
+    <!-- Contact data -->
+    <fieldset class="form-section contact-section">
+        <legend class="section-heading">Datos de contacto</legend>
+
+        <div class="form-row">
+            <label class="form-label" for="form-name">Nombre</label>
+            <input
+                class="form-input{% if 'validate_name' in failed_validations %} form-error-indicator{% endif %}" 
+                type="text" id="form-name"
+                name="name" minlength="3" maxlength="200" required 
+                value="{{failed_form.get('name', '')}}"
+            />
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-email">Email</label>
+            <input
+                class="form-input{% if 'validate_email' in failed_validations %} form-error-indicator{% endif %}" 
+                type="email" id="form-email" 
+                name="email" maxlength="100" required 
+                value="{{failed_form.get('email', '')}}"
+            />
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-phone">Número de Celular</label>
+            <input
+                class="form-input{% if 'validate_phone' in failed_validations %} form-error-indicator{% endif %}" 
+                type="tel" id="form-phone"
+                name="phone" minlength="13" maxlength="13" required
+                placeholder="Ejemplo: +569.12345678" required 
+                value="{{failed_form.get('phone', '')}}"
+            />
+        </div>
+
+        <div class="contact-methods">
+            <div class="section-subheading">Métodos de contacto</div>
+
+            <div
+                id="form-contact-methods-container" 
+                class="contact-methods-container{% if 'validate_contact_method_count' in failed_validations %} form-error-indicator{% endif %}"
+            >
+                {% for i in range(0, 5) %}
+                    <div class="contact-method-row" id="form-contact-method-{{ i }}"
+                    {% if failed_form.get('contact-id-' ~ i, '') == '' and i>0 %}hidden{% endif %}
+                    >
+                        <label class="form-label" for="form-contact-method-{{ i }}-select">Método {{ i+1 }}</label>
+                        <select 
+                            class="form-input{% if 'validate_contact_method-'~ i in failed_validations %} form-error-indicator{% endif %}" 
+                            id="form-contact-method-{{ i }}-select" 
+                            name="contact-method-{{ i }}"
+                        >
+
+                            <option value="" disabled selected>--- SELECCIONE MÉTODO ---</option>
+                            <option value="WhatsApp" {% if failed_form.get('contact-method-' ~ i, '') == 'WhatsApp' %}selected{% endif %}>WhatsApp</option>
+                            <option value="Telegram" {% if failed_form.get('contact-method-' ~ i, '') == 'Telegram' %}selected{% endif %}>Telegram</option>
+                            <option value="X" {% if failed_form.get('contact-method-' ~ i, '') == 'X' %}selected{% endif %}>X</option>
+                            <option value="Instagram" {% if failed_form.get('contact-method-' ~ i, '') == 'Instagram' %}selected{% endif %}>Instagram</option>
+                            <option value="TikTok" {% if failed_form.get('contact-method-' ~ i, '') == 'TikTok' %}selected{% endif %}>TikTok</option>
+                            <option value="Otra" {% if failed_form.get('contact-method-' ~ i, '') == 'Otra' %}selected{% endif %}>Otra</option>
+                        </select>
+
+                    <input
+                        class="form-input{% if 'validate_contact_method-' ~ i in failed_validations %} form-error-indicator{% endif %}" 
+                        id="form-contact-method-{{ i }}-input"
+                        name="contact-id-{{ i }}" minlength="4" maxlength="50"
+                        placeholder="Número, ID o URL"
+                        {% if i==0 %}required{% endif %}
+                        {% if failed_form.get('contact-id-' ~ i, '') == '' and i>0 %}hidden{% endif %}
+                        value="{{ failed_form.get('contact-id-' ~ i, '')}}"
+                    />
+
+                    <div class="contact-method-controls" id="form-contact-method-{{ i }}-controls">
+                        {% if i < 4 %}
+                            <button class="btn btn-small btn-add" id="btn-method-{{ i }}-plus" type="button">+</button>
+                        {% endif %}
+
+                        {% if i > 0 %}
+                            <button class="btn btn-small btn-remove" id="btn-method-{{ i }}-minus" type="button">-</button>
+                        {% endif %}
+                    </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </fieldset>
+
+    <!-- Pet data -->
+    <fieldset class="form-section pet-section">
+        <legend class="section-heading">Datos de la mascota</legend>
+
+        <div class="form-row">
+            <label class="form-label" for="form-type">Tipo</label>
+            <select 
+                class="form-input{% if 'validate_pet_type' in failed_validations %} form-error-indicator{% endif %}" 
+                id="form-type" name="type" required>
+
+                <option disabled selected value="">--- SELECCIONE TIPO ---</option>
+                <option value="gato" {% if failed_form.get('type', '') == 'gato' %}selected{% endif %}>Gato</option>
+                <option value="perro" {% if failed_form.get('type', '') == 'perro' %}selected{% endif %}>Perro</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-quantity">Cantidad</label>
+            <input 
+                class="form-input{% if 'validate_pet_quantity' in failed_validations %} form-error-indicator{% endif %}" 
+                type="number" id="form-quantity" 
+                name="quantity" min="1"
+                required 
+                value={{ failed_form.get('quantity', '') }}
+            />
+        </div>
+
+        <div class="form-row age-row">
+            <label class="form-label" for="form-age-quantity">Edad</label>
+            <input 
+                class="form-input age-input{% if 'validate_pet_age' in failed_validations %} form-error-indicator{% endif %}" 
+                type="number" 
+                id="form-age-quantity"
+                name="age-quantity" min="1"
+                required 
+                value={{ failed_form.get('age-quantity', '') }}
+            />
+
+            <select 
+                class="form-input age-units{% if 'validate_pet_age_unit' in failed_validations %} form-error-indicator{% endif %}" 
+                id="form-age-units" 
+                name="age-unit" 
+                required
+            >
+                <option disabled selected value="">--- SELECCIONE UNIDAD ---</option>
+                <option value="meses" {% if failed_form.get('age-unit', '') == 'meses' %}selected{% endif %}>Meses</option>
+                <option value="annos" {% if failed_form.get('age-unit', '') == 'annos' %}selected{% endif %}>Años</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-deliverytime">Fecha disponible de Entrega</label>
+            <input
+                class="form-input{% if 'validate_delivery_time' in failed_validations %} form-error-indicator{% endif %}" 
+                type="datetime-local" 
+                id="form-deliverytime"
+                name="delivery-time"
+                required
+                value="{{ failed_form.get('delivery-time', '')}}"
+            />
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="form-description">Descripción</label>
+            <textarea 
+                class="form-input form-textarea{% if 'validate_description' in failed_validations %} form-error-indicator{% endif %}" 
+                id="form-description" 
+                name="description" 
+                rows="10" 
+                cols="50"
+                placeholder="Descripción de las mascotas" 
+                required
+            >{{ failed_form.get('description', '')}}</textarea>
+        </div>
+
+        <div class="photos-section">
+            <label class="section-subheading">Fotos</label>
+            <div id="form-photos-container" class="photos-container{% if 'validate_images' in failed_validations %} form-error-indicator{% endif %}">
+                {% for i in range(0, 5) %}
+                    <div class="photo-row" id="form-photo-{{ i }}" 
+                    {# hidden #}
+                    >
+                        <label class="form-label" for="form-photo-{{ i }}-input">Foto {{ i + 1 }}</label>
+                        <input
+                            class="form-input photo-input" id="form-photo-{{ i }}-input" type="file"
+                            name="photo-{{ i }}" accept="image/png, image/jpeg, image/gif"
+                        >
+
+                        <button
+                            class="btn btn-secondary btn-small" id="form-photo-{{ i }}-more-button" type="button"
+                            {# hidden #}
+                        >
+                        Agregar otra foto
+                        </button>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="form-messages">
+        <div id="form-error" class="error-message" hidden>
+            <!-- <p id="form-error-msg" class="error-text"></p> -->
+        </div>
+
+        <div id="form-success" class="success-message" hidden>
+            <p id="form-success-msg" class="success-text"></p>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary" id="form-btn-submit">Agregar este aviso de adopción</button>
+        <button type="button" class="btn btn-secondary" id="form-btn-goback" hidden>Volver al Inicio</button>
+    </div>
+
+</form>
+{% endblock %}
+
+{% block body_modals %}
+<div id="form-confirmation-modal" class="modal" hidden>
+    <div class="modal-content">
+        <p class="modal-text">¿Está seguro que desea agregar este aviso de adopción?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="btn-form-modal-no">No, quiero volver al formulario.</button>
+            <button type="button" class="btn btn-primary" id="btn-form-modal-yes">Si, estoy seguro.</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block body_scripts %}
+<script>const regionsData = {{ regions_data | tojson}};</script>
+<script src="{{ url_for('static', filename='js/newpost-form-handler.js') }}"></script>
+{% endblock %}

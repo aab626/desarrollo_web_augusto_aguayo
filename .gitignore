@@ -1,7 +1,7 @@
 # Ignore directories
-old_tarea1/
-auxiliares/
+_references/
 venv/
 __pycache__/
 database/__pycache__/
 static/uploads/
+utils/fieldnames/__pycache__/

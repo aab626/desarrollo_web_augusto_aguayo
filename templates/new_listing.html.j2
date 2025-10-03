@@ -164,7 +164,7 @@
                             <option value="X" {% if failed_form.get('contact-method-' ~ i, '') == 'X' %}selected{% endif %}>X</option>
                             <option value="Instagram" {% if failed_form.get('contact-method-' ~ i, '') == 'Instagram' %}selected{% endif %}>Instagram</option>
                             <option value="TikTok" {% if failed_form.get('contact-method-' ~ i, '') == 'TikTok' %}selected{% endif %}>TikTok</option>
-                            <option value="Otra" {% if failed_form.get('contact-method-' ~ i, '') == 'Otra' %}selected{% endif %}>Otra</option>
+                            <option value="Otro" {% if failed_form.get('contact-method-' ~ i, '') == 'Otro' %}selected{% endif %}>Otro</option>
                         </select>
 
                     <input
@@ -274,7 +274,7 @@
             <div id="form-photos-container" class="photos-container{% if 'validate_images' in failed_validations %} form-error-indicator{% endif %}">
                 {% for i in range(0, 5) %}
                     <div class="photo-row" id="form-photo-{{ i }}" 
-                    {# hidden #}
+                    {% if i > 0 %}hidden {% endif %}
                     >
                         <label class="form-label" for="form-photo-{{ i }}-input">Foto {{ i + 1 }}</label>
                         <input
@@ -284,7 +284,7 @@
 
                         <button
                             class="btn btn-secondary btn-small" id="form-photo-{{ i }}-more-button" type="button"
-                            {# hidden #}
+                            hidden
                         >
                         Agregar otra foto
                         </button>

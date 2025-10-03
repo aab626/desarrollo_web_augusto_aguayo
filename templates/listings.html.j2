@@ -2,6 +2,7 @@
 {% block title %} Estadísticas {% endblock %}
 
 {% block main_content %}
+{# {{page_data}} #}
 <h2 class="section-title">Avisos Publicados</h2>
 
 <!-- Location data -->
@@ -26,113 +27,68 @@
     </thead>
     <tbody>
     <tbody>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-07-20 11:56</td>
-            <td class="table-cell date-cell">2025-08-20 11:13</td>
-            <td class="table-cell">Santiago</td>
-            <td class="table-cell">Beauchef</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">1</div>
-                <div class="pet-type">Gato</div>
-                <div class="pet-age">1 año</div>
-            </td>
-            <td class="table-cell contact-info">
-                <div class="contact-name">Pedro Calás</div>
-
-                <div class="contact-method">
-                    <div class="contact-type">Telegram</div>
-                    <div class="contact-value">pedro888</div>
-                </div>
-            </td>
-            <td class="table-cell photo-count">4</td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-07-19 18:21</td>
-            <td class="table-cell date-cell">2025-08-16 13:13</td>
-            <td class="table-cell">Providencia</td>
-            <td class="table-cell">Manuel Montt</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">1</div>
-                <div class="pet-type">Gato</div>
-                <div class="pet-age">3 meses</div>
-            </td>
-            <td class="table-cell contact-info">
-                <div class="contact-name">Estefanía Gomez</div>
-
-                <div class="contact-method">
-                    <div class="contact-type">X</div>
-                    <div class="contact-value">estefixd</div>
-                </div>
-            </td>
-            <td class="table-cell photo-count">2</td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-07-16 12:52</td>
-            <td class="table-cell date-cell">2025-08-07 18:01</td>
-            <td class="table-cell">El Bosque</td>
-            <td class="table-cell">Observatorio</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">1</div>
-                <div class="pet-type">Perro</div>
-                <div class="pet-age">6 meses</div>
-            </td>
-            <td class="table-cell contact-info">
-                <div class="contact-name">Joaquín Díaz</div>
-
-                <div class="contact-method">
-                    <div class="contact-type">WhatsApp</div>
-                    <div class="contact-value">+5692323952</div>
-                </div>
-            </td>
-            <td class="table-cell photo-count">3</td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-07-15 18:20</td>
-            <td class="table-cell date-cell">2025-08-03 14:20</td>
-            <td class="table-cell">Independencia</td>
-            <td class="table-cell">Plaza Chacabuco</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">2</div>
-                <div class="pet-type">Gato</div>
-                <div class="pet-age">1 año</div>
-            </td>
-            <td class="table-cell contact-info">
-                <div class="contact-name">Camila Ortiz</div>
-
-                <div class="contact-method">
-                    <div class="contact-type">Instagram</div>
-                    <div class="contact-value">cami.ortiz.1</div>
-                </div>
-            </td>
-            <td class="table-cell photo-count">3</td>
-        </tr>
-
-        <tr class="table-row">
-            <td class="table-cell date-cell">2025-07-15 13:52</td>
-            <td class="table-cell date-cell">2025-08-01 14:20</td>
-            <td class="table-cell">Santiago</td>
-            <td class="table-cell">Los Heroes</td>
-            <td class="table-cell pet-info">
-                <div class="pet-quantity">1</div>
-                <div class="pet-type">Gato</div>
-                <div class="pet-age">3 Meses</div>
-            </td>
-            <td class="table-cell contact-info">
-                <div class="contact-name">Andrés Salazar</div>
-
-                <div class="contact-method">
-                    <div class="contact-type">WhatsApp</div>
-                    <div class="contact-value">+5691231231</div>
-                </div>
-            </td>
-            <td class="table-cell photo-count">5</td>
-        </tr>
+        {% for listing in page_data.data %}
+            <tr class="table-row">
+                <td class="table-cell date-cell">{{ listing.fecha_ingreso }}</td>
+                <td class="table-cell date-cell">{{ listing.fecha_entrega }}</td>
+                <td class="table-cell">{{ listing.comuna.nombre }}</td>
+                <td class="table-cell">{{ listing.sector }}</td>
+                <td class="table-cell pet-info">
+                    <div class="pet-quantity">{{ listing.cantidad }}</div>
+                    <div class="pet-type">{{ listing.tipo|capitalize }}</div>
+                    <div class="pet-age">
+                        {{listing.edad}}
+                        {% if listing.edad == 1 %}
+                            {% if listing.unidad_medida == "a" %}año
+                            {% elif listing.unidad_medida == "m" %}mes
+                            {% else %}ERROR
+                            {% endif %}
+                        {% else %}
+                            {% if listing.unidad_medida == "a" %}años
+                            {% elif listing.unidad_medida == "m" %}meses
+                            {% else %}ERROR
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </td>
+                <td class="table-cell contact-info">
+                    <div class="contact-name">{{ listing.nombre }}</div>
+            
+                    <div class="contact-method">
+                        <div class="contact-type">{{ listing.contactos[0].nombre|capitalize }}</div>
+                        <div class="contact-value">{{ listing.contactos[0].identificador }}</div>
+                    </div>
+                </td>
+                <td class="table-cell photo-count">{{ listing.fotos|length }}</td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
+
+<nav class="pagination">
+    <div class="pagination-buttons">
+        <form class="pagination-form" action="{{ url_for('listings') }}" method="get">
+            {% if page_data.has_prev_page %}
+                <input type="hidden" name="page" value="{{ page_data.prev_page }}">
+                <button type="submit" class="btn btn-secondary btn-page" id="listing-prev-page-button">« Anterior</button>
+            {% else %}
+                <button type="button" class="btn btn-secondary btn-page" id="listing-prev-page-button" disabled>« Anterior</button>
+            {% endif %}
+        </form>
+
+        <span class="pagination-status">Página {{ page_data.page }}</span>
+
+        <form class="pagination-form" action="{{ url_for('listings') }}" method="get">
+            {% if page_data.has_next_page %}
+                <input type="hidden" name="page" value="{{ page_data.next_page }}">
+                <button type="submit" class="btn btn-secondary btn-page" id="listing-next-page-button">Siguiente »</button>
+            {% else %}
+                <button type="button" class="btn btn-secondary btn-page" id="listing-next-page-button" disabled>Siguiente »</button>
+            {% endif %}
+        </form>
+    </div>
+</nav>
+
 {% endblock %}
 
 {% block body_scripts %}

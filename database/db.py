@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, Text
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-from utils import mappers
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
 import utils.fieldnames.new_listing as listingFields
 from datetime import datetime
 
@@ -140,23 +139,57 @@ def get_regions_data():
 
 
 def get_listing_by_id(id: int):
-    session = SessionLocal()
-    listing = session.query(AdoptionListing).filter_by(id=id).first()
-    session.close()
+    with SessionLocal() as session:
+        listing = session.query(AdoptionListing).filter_by(id=id).first()
+    
     return listing
+
 
 def get_last_listings(n: int):
     with SessionLocal() as session:
         listings = (
             session.query(AdoptionListing)
+            .options(joinedload(AdoptionListing.comuna))
             .order_by(AdoptionListing.fecha_ingreso.desc())
             .limit(n)
             .all()
         )
 
-        listings_mapped = [mappers.map_adoption_listing(item) for item in listings]
-    
-    return listings_mapped
+    return listings
+
+
+def get_listings_by_page(page: int, listings_per_page: int):
+    page = max(page, 1)
+    listing_limit = listings_per_page + 1
+    listing_start = (page - 1) * listings_per_page
+    print(page, listing_start, listing_limit)
+
+    with SessionLocal() as session:
+        listings = (
+            session.query(AdoptionListing)
+            .options(
+                joinedload(AdoptionListing.comuna),
+                joinedload(AdoptionListing.contactos),
+                joinedload(AdoptionListing.fotos),
+            )
+            .order_by(AdoptionListing.fecha_ingreso.desc())
+            .offset(listing_start)
+            .limit(listing_limit)
+            .all()
+        )
+
+        has_next_page = len(listings) > listings_per_page
+        listings = listings[:listings_per_page]
+
+    return {
+        'data': listings,
+        'page': page,
+        'listings_per_page': listings_per_page,
+        'has_prev_page': page > 1,
+        'has_next_page': has_next_page,
+        'prev_page': page - 1 if page > 1 else None,
+        'next_page': page + 1 if has_next_page else None,
+    }
 
 
 def get_first_photo_by_listing_id(listing_id: int):
@@ -202,6 +235,7 @@ def create_photo(file_route, file_name, listing_id):
             nombre_archivo = file_name,
             actividad_id = listing_id
         )
+
         session.add(new_photo)
         session.flush()
         photo_id = new_photo.id
@@ -213,10 +247,12 @@ def create_photo(file_route, file_name, listing_id):
 def create_contact_method(contact_name, contact_id, listing_id):
     with SessionLocal() as session:
         new_contact_method = ContactMethod(
-            nombre=contact_name,
-            identificador=contact_id,
+            nombre = contact_name,
+            identificador  =contact_id,
             actividad_id = listing_id
         )
+
+
         session.add(new_contact_method)
         session.flush()
         contact_method_id = new_contact_method.id

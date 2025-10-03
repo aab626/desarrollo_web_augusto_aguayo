@@ -32,17 +32,17 @@
         {% for listing in listings %}
 
         <tr class="table-row">
-            <td class="table-cell date-cell">{{ listing.date_input }}</td>
-            <td class="table-cell">{{ listing.municipality.name }}</td>
+            <td class="table-cell date-cell">{{ listing.fecha_ingreso }}</td>
+            <td class="table-cell">{{ listing.comuna.nombre }}</td>
             <td class="table-cell">{{ listing.sector }}</td>
             <td class="table-cell pet-info">
-                <div class="pet-quantity">{{ listing.quantity }} {{ listing.type }}</div>
+                <div class="pet-quantity">{{ listing.cantidad }} {{ listing.tipo }}</div>
                 <div class="pet-age">
-                    {{listing.age}}
-                    {% if listing.age == 1 %}
-                        {% if listing.age_unit == "a" %}año{% elif listing.age_unit == "m" %}mes{% else %}ERROR{% endif %}
+                    {{listing.edad}}
+                    {% if listing.edad == 1 %}
+                        {% if listing.unidad_medida == "a" %}año{% elif listing.unidad_medida == "m" %}mes{% else %}ERROR{% endif %}
                     {% else %}
-                        {% if listing.age_unit == "a" %}años{% elif listing.age_unit == "m" %}meses{% else %}ERROR{% endif %}
+                        {% if listing.unidad_medida == "a" %}años{% elif listing.unidad_medida == "m" %}meses{% else %}ERROR{% endif %}
                     {% endif %}
                 </div>
             </td>

@@ -446,6 +446,41 @@ body {
 }
 
 
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination-form {
+    margin: 0;
+}
+
+.btn-page {
+    min-width: 8rem;
+    font-weight: bold;
+}
+
+.btn-page[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pagination-status {
+    font-weight: bold;
+    /* color: hsl(212, 67%, 33%); */
+}
+
+
 /* Post Detail Page */
 .post-container {
     border-radius: 5px;

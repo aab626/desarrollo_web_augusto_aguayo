@@ -9,6 +9,7 @@ import utils.fieldnames.new_listing as listingFields
 
 UPLOAD_FOLDER = 'static/uploads'
 LISTINGS_IN_INDEX = 5
+LISTINGS_PER_PAGE = 5
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = Path(UPLOAD_FOLDER)
@@ -25,7 +26,7 @@ def index():
             listing_success = False
 
         last_listings = db.get_last_listings(LISTINGS_IN_INDEX)
-        last_listings_photo = {l.get('id'): db.get_first_photo_by_listing_id(l.get('id')) for l in last_listings}
+        last_listings_photo = {l.id: db.get_first_photo_by_listing_id(l.id) for l in last_listings}
         return render_template('index.html.j2', listings=last_listings, photo_dict=last_listings_photo, listing_success=listing_success)
     
 # New post form
@@ -48,7 +49,7 @@ def add_listing():
         valid_status, failed_validations = validate_listing(request.form, request.files)
         if valid_status:
             img_filenames = []
-            for field, upload in request.files.items():
+            for _field, upload in request.files.items():
                 if not upload or not upload.filename:
                     continue
 
@@ -86,14 +87,21 @@ def add_listing():
                             failed_files={k: v.filename for k, v in request.files.items() if v and v.filename},
                             failed_validations=failed_validations
                             )
-            
-    return render_template('new_listing.html.j2', regions_data=db.get_regions_data())
+    
+    elif request.method == 'GET':
+        return render_template('new_listing.html.j2', regions_data=db.get_regions_data())
 
 # List posts
 @app.route('/listings', methods=['GET'])
 def listings():
     if request.method == 'GET':
-        return render_template('listings.html.j2')
+        try:
+            page = int(request.args.get('page', 1))
+        except Exception:
+            page = 1
+        
+        page_data = db.get_listings_by_page(page, LISTINGS_PER_PAGE)
+        return render_template('listings.html.j2', page_data=page_data)
 
 # Statistics (placeholder)
 @app.route('/statistics', methods=['GET'])

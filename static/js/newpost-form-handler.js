@@ -2,7 +2,7 @@
 const DEFAULT_OPTION_REGION = "--- SELECCIONE REGIÓN ---";
 const DEFAULT_OPTION_MUNICIPALITY = "--- SELECCIONE COMUNA ---";
 const DEFAULT_OPTION_CONTACT_METHOD = '--- SELECCIONE MÉTODO ---';
-const CONTACT_METHODS = [DEFAULT_OPTION_CONTACT_METHOD, 'WhatsApp', 'Telegram', 'X', 'Instagram', 'TikTok', 'Otra'];
+const CONTACT_METHODS = [DEFAULT_OPTION_CONTACT_METHOD, 'WhatsApp', 'Telegram', 'X', 'Instagram', 'TikTok', 'Otro'];
 const PET_TYPES = ["perro", "gato"];
 const PET_AGE_UNITS = ['meses', 'annos'];
 const MIN_DELIVERY_TIME = new Date(Date.now() + (3 * 60 * 60 * 1000));;

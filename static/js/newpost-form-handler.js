@@ -433,8 +433,13 @@ const validateForm = () => {
 
     // Description validation
     let description = document.getElementById("form-description");
-    if (description.value.length < 30) {
-        addErrorMsg(`Descripción muy corta, por favor comenta algo más de la mascota.`);
+    // if (description.value.length < 30) {
+    //     addErrorMsg(`Descripción muy corta, por favor comenta algo más de la mascota.`);
+    //     description.classList.add('form-error-indicator');
+    //     validForm = false;
+    // }
+    if (description.value.length > 2048) {
+        addErrorMsg(`Descripción muy larga, el límite es 2048 caractéres.`);
         description.classList.add('form-error-indicator');
         validForm = false;
     }

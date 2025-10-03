@@ -23,8 +23,8 @@ def validate_municipality(form):
     return form.get(listingFields.FIELD_MUNICIPALITY) in [m.nombre for m in db.get_all_municipalities_by_region_name(form.get(listingFields.FIELD_REGION))]
 
 
-def validate_sector(form):
-    return len(form.get(listingFields.FIELD_SECTOR)) <= 100
+# def validate_sector(form):
+#     return len(form.get(listingFields.FIELD_SECTOR)) <= 100
 
 
 def validate_name(form):
@@ -112,7 +112,7 @@ def validate_description(form):
     if not description_value:
         return False
     
-    return len(description_value) >= 30
+    return len(description_value) <= 2048
 
 
 def validate_image_count(files):
@@ -186,7 +186,7 @@ def validate_listing(form, files):
     form_validators = (
         validate_region,
         validate_municipality,
-        validate_sector,
+        # validate_sector,
         validate_name,
         validate_email,
         validate_phone,

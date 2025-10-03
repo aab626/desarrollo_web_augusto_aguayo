@@ -171,7 +171,7 @@ def get_listings_by_page(page: int, listings_per_page: int):
     page = max(page, 1)
     listing_limit = listings_per_page + 1
     listing_start = (page - 1) * listings_per_page
-    print(page, listing_start, listing_limit)
+    # print(page, listing_start, listing_limit)
 
     with SessionLocal() as session:
         listings = (

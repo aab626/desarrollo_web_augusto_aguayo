@@ -16,7 +16,7 @@
             {% for failed_validation in failed_validations %}
                 {% if failed_validation == 'validate_region' %}<p id="form-error-msg" class="error-text">Región inválida.</p>{% endif %}
                 {% if failed_validation == 'validate_municipality' %}<p id="form-error-msg" class="error-text">Comuna inválida.</p>{% endif %}
-                {% if failed_validation == 'validate_sector' %}<p id="form-error-msg" class="error-text">Nombre de sector muy largo, no debe exceder 100 caractéres.</p>{% endif %}
+                {# {% if failed_validation == 'validate_sector' %}<p id="form-error-msg" class="error-text">Nombre de sector muy largo, no debe exceder 100 caractéres.</p>{% endif %} #}
                 {% if failed_validation == 'validate_name' %}<p id="form-error-msg" class="error-text">Nombre debe contener entre 3 y 200 caractéres.</p>{% endif %}
                 {% if failed_validation == 'validate_email' %}<p id="form-error-msg" class="error-text">Email inválido.</p>{% endif %}
                 {% if failed_validation == 'validate_phone' %}<p id="form-error-msg" class="error-text">Número de teléfono inválido.</p>{% endif %}
@@ -31,7 +31,7 @@
                 {% if failed_validation == 'validate_pet_age' %}<p id="form-error-msg" class="error-text">Edad de mascota inválida, debe ser un número mayor o igual a 1.</p>{% endif %}
                 {% if failed_validation == 'validate_pet_age_unit' %}<p id="form-error-msg" class="error-text">Unidad de edad inválida.</p>{% endif %}
                 {% if failed_validation == 'validate_delivery_time' %}<p id="form-error-msg" class="error-text">Fecha de entrega inválida.</p>{% endif %}
-                {% if failed_validation == 'validate_description' %}<p id="form-error-msg" class="error-text">Descripción muy corta, por favor comenta algo más de la mascota.</p>{% endif %}
+                {% if failed_validation == 'validate_description' %}<p id="form-error-msg" class="error-text">Descripción muy larga, el límite es 2048 caractéres.</p>{% endif %}
                 {% if failed_validation == 'validate_image_count' %}<p id="form-error-msg" class="error-text">Se debe ingresar al menos una foto.</p>{% endif %}
                 {% if failed_validation == 'validate_images' %}<p id="form-error-msg" class="error-text">Se ha detectado una imágen inválida.</p>{% endif %}
                 {% if failed_validation == 'validate_image-0' %}<p id="form-error-msg" class="error-text">La imágen 1:"{{ failed_files.get('photo-0', '') }}" no es válida.</p>{% endif %}
@@ -99,7 +99,7 @@
             <input 
                 class="form-input{% if 'validate_sector' in failed_validations %} form-error-indicator{% endif %}" 
                 type="text" id="form-sector-input" 
-                name="sector" maxlength="100" required 
+                name="sector" maxlength="100" 
                 value="{{failed_form.get('sector', '')}}"
             />
         </div>
@@ -265,7 +265,6 @@
                 rows="10" 
                 cols="50"
                 placeholder="Descripción de las mascotas" 
-                required
             >{{ failed_form.get('description', '')}}</textarea>
         </div>
 

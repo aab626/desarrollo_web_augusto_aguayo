@@ -502,7 +502,7 @@ body {
 
 .photos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.75rem;
     margin-top: 0.75rem;
 }
@@ -568,6 +568,13 @@ body {
     margin-bottom: 0.25rem;
     padding: 0.25rem;
     border-radius: 3px;
+}
+
+.contact-method-detail-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.2rem;
+    justify-content: space-between;
 }
 
 .contact-method-type {
@@ -681,7 +688,7 @@ body {
 
 .modal-text {
     font-size: 1rem;
-    color: #333;
+    color: #dfdfdf;
     margin-bottom: 1rem;
     text-align: center;
     line-height: 1.5;
@@ -717,6 +724,28 @@ body {
     border: 1px solid #333;
 }
 
+/* Contact method icon display */
+
+/* ...existing code... */
+.icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.icon-fallback {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    background: #eee;
+    border-radius: 4px;
+}
+
 
 /* Utility Classes */
 [hidden] {
@@ -734,3 +763,5 @@ body {
 .text-right {
     text-align: right;
 }
+
+

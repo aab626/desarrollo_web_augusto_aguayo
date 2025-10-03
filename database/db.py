@@ -140,7 +140,16 @@ def get_regions_data():
 
 def get_listing_by_id(id: int):
     with SessionLocal() as session:
-        listing = session.query(AdoptionListing).filter_by(id=id).first()
+        listing = (
+            session.query(AdoptionListing)
+            .options(
+                joinedload(AdoptionListing.comuna),
+                joinedload(AdoptionListing.contactos),
+                joinedload(AdoptionListing.fotos),
+            )
+            .filter_by(id=id)
+            .first()
+        )
     
     return listing
 

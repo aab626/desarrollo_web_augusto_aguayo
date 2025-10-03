@@ -1,5 +1,5 @@
 {% extends 'base.html.j2' %}
-{% block title %} Estadísticas {% endblock %}
+{% block title %} Avisos Publicados {% endblock %}
 
 {% block main_content %}
 {# {{page_data}} #}
@@ -25,10 +25,10 @@
             <th class="table-header">Total Fotos</th>
         </tr>
     </thead>
-    <tbody>
+
     <tbody>
         {% for listing in page_data.data %}
-            <tr class="table-row">
+            <tr class="table-row listing-row" data-listing-id="{{ listing.id }}">
                 <td class="table-cell date-cell">{{ listing.fecha_ingreso }}</td>
                 <td class="table-cell date-cell">{{ listing.fecha_entrega }}</td>
                 <td class="table-cell">{{ listing.comuna.nombre }}</td>
@@ -55,7 +55,21 @@
                     <div class="contact-name">{{ listing.nombre }}</div>
             
                     <div class="contact-method">
-                        <div class="contact-type">{{ listing.contactos[0].nombre|capitalize }}</div>
+                        <div class="contact-method-icon">
+                            {% if listing.contactos[0].nombre == 'whatsapp' %}
+                                <img class="icon icon-whatsapp" src="{{ url_for('static', filename='svg/whatsapp-brands-solid-full.svg') }}" alt="WhatsApp">
+                            {% elif listing.contactos[0].nombre == 'telegram' %}
+                                <img class="icon icon-telegram" src="{{ url_for('static', filename='svg/telegram-brands-solid-full.svg') }}" alt="Telegram">
+                            {% elif listing.contactos[0].nombre == 'x' %}
+                                <img class="icon icon-x" src="{{ url_for('static', filename='svg/x-twitter-brands-solid-full.svg') }}" alt="X">
+                            {% elif listing.contactos[0].nombre == 'instagram' %}
+                                <img class="icon icon-instagram" src="{{ url_for('static', filename='svg/instagram-brands-solid-full.svg') }}" alt="Instagram">
+                            {% elif listing.contactos[0].nombre == 'tiktok' %}
+                                <img class="icon icon-tiktok" src="{{ url_for('static', filename='svg/tiktok-brands-solid-full.svg') }}" alt="TikTok">
+                            {% else %}
+                                <img class="icon icon-otro" src="{{ url_for('static', filename='svg/address-book-solid-full.svg') }}" alt="Otro">
+                            {% endif %}
+                        </div>
                         <div class="contact-value">{{ listing.contactos[0].identificador }}</div>
                     </div>
                 </td>
@@ -92,4 +106,5 @@
 {% endblock %}
 
 {% block body_scripts %}
+<script src="{{ url_for('static', filename='js/listing-handler.js') }}"></script>
 {% endblock %}

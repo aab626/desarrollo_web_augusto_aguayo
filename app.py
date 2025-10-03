@@ -6,6 +6,8 @@ import hashlib
 import filetype
 from pathlib import Path
 import utils.fieldnames.new_listing as listingFields
+import locale
+
 
 UPLOAD_FOLDER = 'static/uploads'
 LISTINGS_IN_INDEX = 5
@@ -13,6 +15,10 @@ LISTINGS_PER_PAGE = 5
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = Path(UPLOAD_FOLDER)
+
+# Set locale to Chilean Spanish
+locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8')
+
 
 # Routes
 
@@ -107,13 +113,20 @@ def listings():
 @app.route('/statistics', methods=['GET'])
 def statistics():
     if request.method == 'GET':
-        return render_template('statistics.html.j2')
+        return render_template('statistics.html.j2')\
+        
+
+@app.route('/adoption_listing/<int:listing_id>', methods=['GET'])
+def listing(listing_id: int):
+    if request.method == 'GET':
+        listing_data = db.get_listing_by_id(listing_id)
+        return render_template('listing.html.j2', listing=listing_data)
     
 
-@app.route('/test', methods=['GET'])
-def test_id(id=None):
-    # return "test"
-    return redirect(url_for('index', listing_success=1))
+# @app.route('/test', methods=['GET'])
+# def test_id(id=None):
+#     # return "test"
+#     return redirect(url_for('index', listing_success=1))
 
 # Execute application
 if __name__ == '__main__':

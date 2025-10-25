@@ -49,11 +49,12 @@ Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_,
  - Como la página de estadísticas sigue siendo estática, sus gráficos se encuentran en `static/images/statistics`.
 
 ### Tarea 3
- - Para generar los gráficos se utilizó la libreria ['Chart.js'](https://www.chartjs.org/) mediante _CDN_.
+ - Para generar los gráficos se utilizó la libreria [Chart.js](https://www.chartjs.org/) mediante _CDN_ (licencia [MIT](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md)).
  - Estos se cargan de forma asíncrona al resto de la página usando _fetch_.
  - Los comentarios en las páginas de los avisos se cargan también asincrónicamente usando _fetch_.
  - El comentario recién agregado se guarda en la _DB_, pero se muestra modificando el _DOM_.
  - Los comentarios tienen verificaciones _client-side_ y _server-side_, y muestran los errores de validación, al igual que para el ingreso de un nuevo aviso de adopción.
+ - Tanto para el manejo de los gráficos y el manejo de comentarios se crearon dos nuevos archivos _JS_: `comment-handler.js` y `statistics-charts.js`.
 
 ## Configuración y ejecución
 

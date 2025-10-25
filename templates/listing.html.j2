@@ -135,6 +135,29 @@
         </div>
     </section>
 
+    {# Comments #}
+    <section class="post-section comments">
+        <h3 class="section-heading">Comentarios</h3>
+
+        <form id="comment-form" data-listing-id="{{ listing.id }}">
+            <div class="form-field comment-field-name">
+                <label class="form-label" for="nombre" >Nombre</label>
+                <input type="text" id="form-comment-nombre" name="nombre" minlength="3" maxlength="80" required />
+            </div>
+
+            <div class="form-field commend-field-text">
+                <textarea type="text" id="form-comment-texto" name="texto" rows="4" cols="50" minlength="5" maxlength="300" placeholder="Comentario" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="form-btn-submit">Agregar comentario</button>
+
+            <div id="comment-errors-container" class="comment-errors" hidden></div>
+        </form>
+
+        <div id="comments-container" class="comments-container"></div>
+        
+    </section>
+
     <!-- Action Buttons -->
     <div class="post-actions">
         <button type="button" id="btn-footer-nav-listings" class="btn btn-secondary">Ver más avisos</button>
@@ -161,4 +184,5 @@
 
 {% block body_scripts %}
 <script src="{{ url_for('static', filename='js/post-handler.js') }}"></script>
+<script src="{{ url_for('static', filename='js/comment-handler.js') }}"></script>
 {% endblock %}

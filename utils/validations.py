@@ -1,5 +1,6 @@
 from database import db
 import utils.fieldnames.new_listing as listingFields
+import utils.fieldnames.new_comment as commentFields
 import re
 from datetime import datetime, timedelta
 import filetype
@@ -15,6 +16,8 @@ VALID_IMAGE_MIMETYPES = ['image/png', 'image/jpeg', 'image/gif']
 
 
 # Validators
+
+# Listing validators
 def validate_region(form):
     return form.get(listingFields.FIELD_REGION) in [r.nombre for r in db.get_all_regions()]
 
@@ -181,6 +184,21 @@ def validate_image(files, i, n_uploaded):
         
     # return images > 0 """
 
+# Comment validators
+def validate_comment_name(form):
+    value = form.get(commentFields.FIELD_COMMENT_NAME)
+    if len(value) < 3 or len(value) > 80:
+        return False
+    
+    return True
+
+def validate_comment_text(form):
+    value = form.get(commentFields.FIELD_COMMENT_TEXT)
+    if len(value) < 5 or len(value) > 300:
+        return False
+
+    return True
+
 
 def validate_listing(form, files):
     form_validators = (
@@ -215,4 +233,16 @@ def validate_listing(form, files):
     failed_validations = failed_form + failed_contact_methods + failed_files + failed_images
 
     # Return validation status, and failed verifications function names
+    return failed_n == 0, failed_validations
+
+
+def validate_comment(form):
+    form_validators = [
+        validate_comment_name,
+        validate_comment_text,
+    ]
+
+    # Run the validators
+    failed_validations = [fv.__name__ for fv in form_validators if not fv(form)]
+    failed_n = len(failed_validations)
     return failed_n == 0, failed_validations

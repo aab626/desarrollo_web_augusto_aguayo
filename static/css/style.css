@@ -632,6 +632,12 @@ body {
     border: 1px solid #ddd;
 }
 
+.stat-chart {
+    display: block;
+    width: 100%;
+    height: 300px;
+}
+
 
 /* Modals */
 .modal {
@@ -745,6 +751,140 @@ body {
     background: #eee;
     border-radius: 4px;
 }
+
+/* Comments Section */
+.comments {
+    margin-top: 2rem;
+}
+
+#comment-form {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.comment-field-name {
+    margin-bottom: 1rem;
+}
+
+#form-comment-nombre {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+#form-comment-nombre:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.commend-field-text {
+    margin-bottom: 1rem;
+}
+
+#form-comment-texto {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+#form-comment-texto:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.comments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comment {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-left: 3px solid #4a90e2;
+    border-radius: 3px;
+    padding: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.comment:hover {
+    background-color: #f5f5f5;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.comment-name {
+    font-weight: bold;
+    color: #333;
+    font-size: 1rem;
+}
+
+.comment-date {
+    font-size: 0.85rem;
+    color: #666;
+    font-family: 'Courier New', monospace;
+}
+
+.comment-contents {
+    padding: 0.5rem 0;
+}
+
+.comment-text {
+    color: #555;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.comment-errors {
+    background-color: #ffe6e6;
+    border: 1px solid #ffcccc;
+    border-left: 4px solid #cc0000;
+    border-radius: 3px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-error {
+    color: #cc0000;
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+    line-height: 1.4;
+}
+
+.comment-error:first-child {
+    margin-top: 0;
+}
+
+.comment-error:last-child {
+    margin-bottom: 0;
+}
+
+.comment-error::before {
+    content: "⚠ ";
+    font-weight: bold;
+    margin-right: 0.25rem;
+}
+
 
 
 /* Utility Classes */

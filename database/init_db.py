@@ -1,6 +1,6 @@
 from pathlib import Path
 from sqlalchemy import text
-from db import Base, engine
+from .db import Base, engine
 
 # SQL Scripts
 BASE_DIR = Path(__file__).resolve().parent

@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, Text
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, Text, desc, func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
 import utils.fieldnames.new_listing as listingFields
+import utils.fieldnames.new_comment as commentFields
 from datetime import datetime
 
 DB_NAME = "tarea2"
@@ -59,6 +60,7 @@ class AdoptionListing(Base):
     comuna = relationship("Municipality", back_populates="avisos")
     fotos = relationship("Photo", back_populates="aviso", cascade="all, delete-orphan")
     contactos = relationship("ContactMethod", back_populates="aviso", cascade="all, delete-orphan")
+    comentarios = relationship('Commentary', back_populates='aviso', cascade='', passive_deletes=True, order_by=lambda: desc(Commentary.fecha))
 
 
 class Photo(Base):
@@ -69,7 +71,7 @@ class Photo(Base):
     nombre_archivo = Column(String(300))
     actividad_id = Column(BigInteger, ForeignKey('aviso_adopcion.id', ondelete='CASCADE'), nullable=False)
 
-    aviso = relationship("AdoptionListing", back_populates="fotos")
+    aviso = relationship('AdoptionListing', back_populates='fotos')
 
 
 class ContactMethod(Base):
@@ -81,6 +83,19 @@ class ContactMethod(Base):
     actividad_id = Column(BigInteger, ForeignKey('aviso_adopcion.id', ondelete='CASCADE'), nullable=False)
 
     aviso = relationship("AdoptionListing", back_populates="contactos")
+
+
+class Commentary(Base):
+    __tablename__ = 'comentario'
+
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, nullable=False)
+    aviso_id = Column(BigInteger, ForeignKey('aviso_adopcion.id', ondelete='RESTRICT', onupdate='RESTRICT'), nullable=False, index=True)
+
+    aviso = relationship('AdoptionListing', back_populates='comentarios')
+
 
 
 # DB Functions
@@ -268,3 +283,110 @@ def create_contact_method(contact_name, contact_id, listing_id):
         session.commit()
 
     return contact_method_id
+
+
+def get_statistics_by_day():
+    with SessionLocal() as session:
+        rows = (
+            session.query(
+                func.date(AdoptionListing.fecha_ingreso).label('day'),
+                func.count().label('count')
+            )
+            .group_by(func.date(AdoptionListing.fecha_ingreso))
+            .order_by(func.date(AdoptionListing.fecha_ingreso))
+            .all()
+        )
+
+        data = [
+            {
+                "day": (r.day.isoformat() if hasattr(r.day, "isoformat") else str(r.day)), 
+                "count": r.count
+            } 
+            for r in rows]
+        
+        return data
+
+
+def get_statistics_by_type():
+    with SessionLocal() as session:
+        rows = (
+            session.query(
+                AdoptionListing.tipo.label('tipo'),
+                func.count().label('count')
+            )
+            .group_by(AdoptionListing.tipo)
+            .all()
+        )
+
+    # Ensure both keys exists when one type is zero
+    data = {'perro': 0, 'gato': 0}
+    for row in rows:
+        if row.tipo in data:
+            data[row.tipo] = row.count
+
+    return data
+
+
+def get_statistics_monthly_by_type():
+    with SessionLocal() as session:
+        month_key = func.date_format(AdoptionListing.fecha_ingreso, '%Y-%m')
+        rows = (
+            session.query(
+                month_key.label('month'),
+                AdoptionListing.tipo.label('tipo'),
+                func.count().label('count')
+            )
+            .group_by(month_key, AdoptionListing.tipo)
+            .order_by(month_key.asc())
+            .all()
+        )
+    
+    # Normalize data into {month: {gato: x, perro: y}}
+    months = {}
+    for month, type_, count in rows:
+        months.setdefault(month, {'gato': 0, 'perro': 0})
+        if type_ in months[month]:
+            months[month][type_] = count
+
+    labels = sorted(months.keys())
+    cats = [months[month]['gato'] for month in labels]
+    dogs = [months[month]['perro'] for month in labels]
+    data = {'labels': labels, 'gatos': cats, 'perros': dogs}
+    return data
+
+
+def create_comment(listing_id, form):
+    with SessionLocal() as session:
+        new_comment = Commentary(
+            nombre = form.get(commentFields.FIELD_COMMENT_NAME),
+            texto = form.get(commentFields.FIELD_COMMENT_TEXT),
+            fecha = datetime.now(),
+            aviso_id = listing_id
+        )
+
+        session.add(new_comment)
+        session.flush()
+        comment_id = new_comment.id
+        session.commit()
+
+    return comment_id
+
+
+def get_comments(listing_id):
+    with SessionLocal() as session:
+        comments = (
+            session.query(Commentary)
+            .filter(Commentary.aviso_id == listing_id)
+            .order_by(Commentary.fecha.desc())
+            .all()
+        )
+
+    data = [
+        {
+            'nombre': c.nombre,
+            'texto': c.texto,
+            'fecha': c.fecha.strftime('%d de %B de %Y, %H:%M')
+        } for c in comments
+    ]
+
+    return data

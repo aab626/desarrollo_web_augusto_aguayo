@@ -1,38 +1,44 @@
 {% extends 'base.html.j2' %}
 {% block title %} Estadísticas {% endblock %}
 
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"
+    integrity="sha512-Y51n9mtKTVBh3Jbx5pZSJNDDMyY+yGe77DGtBPzRlgsf/YLCh13kSZ3JmfHGzYFCmOndraf0sQgfM654b7dJ3w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
 {% block main_content %}
 <h2 class="section-title">Estadísticas</h2>
 
 <div class="statistics-grid">
     <div class="stat-item">
         <h3 class="stat-title">Adopciones por día</h3>
-        <img 
-            class="stat-image" 
-            src="{{ url_for('static', filename='images/statistics/adoptions_per_day.png') }}"
-            alt="Gráfico de barras: adopciones por día."
-        >
+        <canvas id="chart-bar-daily" class="stat-chart"></canvas>
+
     </div>
 
     <div class="stat-item">
         <h3 class="stat-title">Avisos por tipo de mascota</h3>
-        <img
+        {# <img
             class="stat-image"
             src="{{ url_for('static', filename='images/statistics/adoptions_pie.png') }}"
             alt="Gráfico de torta: adopciones de gatos vs. perros"
-        >
+        > #}
+        <canvas id="chart-pie-types" class="stat-chart"></canvas>
     </div>
 
     <div class="stat-item">
         <h3 class="stat-title">Adopciones por tipo, mes a mes</h3>
-        <img 
+        {# <img 
             class="stat-image"
             src="{{ url_for('static', filename='images/statistics/adoptions_monthly_per_type.png') }}"
             alt="Gráfico de barras: adopciones por mes, por tipo."
-        >
+        > #}
+        <canvas id="chart-column-per-type" class="stat-chart"></canvas>
     </div>
 </div>
 {% endblock %}
 
 {% block body_scripts %}
+<script src="{{ url_for('static', filename='js/statistics-charts.js') }}"></script>
 {% endblock %}

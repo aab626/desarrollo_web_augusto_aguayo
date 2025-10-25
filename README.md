@@ -64,16 +64,16 @@ CREATE USER IF NOT EXISTS 'cc5002' @'localhost' IDENTIFIED BY 'programacionweb';
 GRANT ALL ON tarea2.* TO cc5002 @localhost;
 ```
 
-Luego, la creación de tablas se abstrae mediante el script `database/init_db.py`:
+La creación de tablas se abstrae mediante el script `database/init_db.py`:
 
 ```bash
-python ./database/init_db
+python -m database.init_db
 ```
 
 Finalmente, se puede ejecutar la aplicación en modo depuración:
 
 ```bash
-python --debug run
+flask --debug run
 ```
 
 Por defecto, la aplicación corre en [`http://127.0.0.1:5000`](http://127.0.0.1:5000).

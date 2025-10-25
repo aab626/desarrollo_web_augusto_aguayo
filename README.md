@@ -28,14 +28,32 @@ Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_,
 
 ## Notas de Implementación
 
-- Corregidos los errores de validación HTML de Tarea 1.
-- Se implementan validaciones por el lado del usuario (`js`), tanto como en backend.
-- Al encontrar un error de validación por parte del backend, al retornar al formulario se rellenan los campos con la información proporcionada a excepción de las imágenes, por limitación del comportamiento de navegadores y seguridad.
-- Si bien los campos de _Sector_ y _Descripción_ en el formulario de nuevo aviso no son obligatorios, se introdujo un límite de 2048 caracteres en la descripción para evitar posts maliciosos.
-- Para varias queries por la ORM se utilizó la opción `joinedload`, para así incluir los datos de tablas relacionadas sin incurrir en errores por pérdida de sesión.
-- Se reemplazó la carga de datos de regiones desde el JSON externo por los datos de la base de datos.
-- Se incluyeron varios íconos `svg` para los distintos métodos de contacto, como para el favicon del sitio.
-- Como la página de estadísticas sigue siendo estática, sus gráficos se encuentran en `static/images/statistics`.
+### Tarea 1
+ - Uso de elementos `main`, `header`, `nav`, `section` y `fieldset` vez de solo `div` planos, según estándar HTML5.
+ - Se asignaron clases a todos los elementos importantes para estilizarlos con CSS.
+ - Las funcionalidades compartidas mediante JS por distintos archivos html se implementaron en un archivo distinto para reutilizar código: `navigation.js`.
+ - Las funcionalidades específicas de cada página se implementan en un archivo distinto, para evitar peticiones innecesarias.
+ - Para el formulario, se validan todos los campos de acuerdo con los criterios especificados en el enunciado indicándole al usuario el mensaje de error y resaltando (en rojo) el campo con errores.
+ - Los elementos ocultos (botones, inputs, modales, etc.) se implementan mediante el atributo `hidden` en vez de `display: none`, así pude implementar toda la funcionalidad del sitio con solo HTML y JS, para dejar el CSS para el final.
+ - La información de regiones y comunas de chile se carga dinámicamente desde un JSON externo.
+ - Las imágenes de los gráficos se agrandan al hacerles _hover_, para poder leerlas más claramente.
+
+### Tarea 2
+ - Corregidos los errores de validación HTML de Tarea 1.
+ - Se implementan validaciones por el lado del usuario (`js`), tanto como en backend.
+ - Al encontrar un error de validación por parte del backend, al retornar al formulario se rellenan los campos con la información proporcionada a excepción de las imágenes, por limitación del comportamiento de navegadores y seguridad.
+ - Si bien los campos de _Sector_ y _Descripción_ en el formulario de nuevo aviso no son obligatorios, se introdujo un límite de 2048 caracteres en la descripción para evitar posts maliciosos.
+ - Para varias queries por la ORM se utilizó la opción `joinedload`, para así incluir los datos de tablas relacionadas sin incurrir en errores por pérdida de sesión.
+ - Se reemplazó la carga de datos de regiones desde el JSON externo por los datos de la base de datos.
+ - Se incluyeron varios íconos `svg` para los distintos métodos de contacto, como para el favicon del sitio.
+ - Como la página de estadísticas sigue siendo estática, sus gráficos se encuentran en `static/images/statistics`.
+
+### Tarea 3
+ - Para generar los gráficos se utilizó la libreria ['Chart.js'](https://www.chartjs.org/) mediante _CDN_.
+ - Estos se cargan de forma asíncrona al resto de la página usando _fetch_.
+ - Los comentarios en las páginas de los avisos se cargan también asincrónicamente usando _fetch_.
+ - El comentario recién agregado se guarda en la _DB_, pero se muestra modificando el _DOM_.
+ - Los comentarios tienen verificaciones _client-side_ y _server-side_, y muestran los errores de validación, al igual que para el ingreso de un nuevo aviso de adopción.
 
 ## Configuración y ejecución
 
@@ -44,7 +62,7 @@ Setup inicial, entorno virtual y dependencias:
 ```bash
 git clone https://github.com/aab626/desarrollo_web_augusto_aguayo.git
 cd ./desarrollo_web_augusto_aguayo
-git checkout tarea-2
+git checkout tarea-3
 ```
 
 ```bash

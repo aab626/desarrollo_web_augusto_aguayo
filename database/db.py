@@ -61,6 +61,7 @@ class AdoptionListing(Base):
     fotos = relationship("Photo", back_populates="aviso", cascade="all, delete-orphan")
     contactos = relationship("ContactMethod", back_populates="aviso", cascade="all, delete-orphan")
     comentarios = relationship('Commentary', back_populates='aviso', cascade='', passive_deletes=True, order_by=lambda: desc(Commentary.fecha))
+    notas = relationship('Rating', back_populates='aviso', cascade='all, delete-orphan')
 
 
 class Photo(Base):
@@ -95,6 +96,16 @@ class Commentary(Base):
     aviso_id = Column(BigInteger, ForeignKey('aviso_adopcion.id', ondelete='RESTRICT', onupdate='RESTRICT'), nullable=False, index=True)
 
     aviso = relationship('AdoptionListing', back_populates='comentarios')
+
+
+class Rating(Base):
+    __tablename__ = 'nota'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    aviso_id = Column(Integer, ForeignKey('aviso_adopcion.id', ondelete='RESTRICT', onupdate='RESTRICT'), nullable=False, index=True)
+    nota = Column(Integer, nullable=False)
+
+    aviso = relationship('AdoptionListing', back_populates='notas')
 
 
 

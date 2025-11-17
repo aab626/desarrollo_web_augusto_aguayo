@@ -1,5 +1,7 @@
 from pathlib import Path
 from sqlalchemy import text
+import argparse
+
 from .db import Base, engine
 
 # SQL Scripts
@@ -24,10 +26,18 @@ def run_sql_file(path, commit=False):
 
 # Execution block
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--populate', action='store_true', help='Populates region and comuna tables')
+    args = parser.parse_args()
+
     # Create tables from models
     Base.metadata.create_all(engine)
     print("Database Initialized")
 
     # Populate region and comuna tables
-    run_sql_file(POPULATE_REGION_SQL, commit=True)
-    run_sql_file(POPULATE_COMUNA_SQL, commit=True)
+    if args.populate:
+        print('Populating tables...')
+        run_sql_file(POPULATE_REGION_SQL, commit=True)
+        run_sql_file(POPULATE_COMUNA_SQL, commit=True)
+
+    print('Operation completed')

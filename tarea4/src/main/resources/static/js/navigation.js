@@ -8,23 +8,24 @@ let navBtnListings = document.getElementById("btn-nav-listings");
 let navBtnStatistics = document.getElementById("btn-nav-statistics");
 let navBtnRate = document.getElementById("btn-nav-rate");
 
-// Event linking
+// Event linking - Navigate to Flask pages
 navBtnIndex.addEventListener("click", (event) => {
-    window.location.href = "/"
+    window.location.href = FLASK_URL + "/"
 });
 
 navBtnAddPost.addEventListener("click", (event) => {
-    window.location.href = "/new_listing"
+    window.location.href = FLASK_URL + "/new_listing"
 });
 
 navBtnListings.addEventListener("click", (event) => {
-    window.location.href = "/listings"
+    window.location.href = FLASK_URL + "/listings"
 });
 
 navBtnStatistics.addEventListener("click", (event) => {
-    window.location.href = "/statistics"
+    window.location.href = FLASK_URL + "/statistics"
 });
 
+// Navigate to Spring Boot rating page
 navBtnRate.addEventListener("click", (event) => {
     window.location.href = SPRING_URL + "/rate_listings"
 });

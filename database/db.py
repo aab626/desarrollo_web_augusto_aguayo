@@ -101,8 +101,8 @@ class Commentary(Base):
 class Rating(Base):
     __tablename__ = 'nota'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    aviso_id = Column(Integer, ForeignKey('aviso_adopcion.id', ondelete='RESTRICT', onupdate='RESTRICT'), nullable=False, index=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    aviso_id = Column(BigInteger, ForeignKey('aviso_adopcion.id', ondelete='RESTRICT', onupdate='RESTRICT'), nullable=False, index=True)
     nota = Column(Integer, nullable=False)
 
     aviso = relationship('AdoptionListing', back_populates='notas')

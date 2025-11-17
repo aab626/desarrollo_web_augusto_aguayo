@@ -1,8 +1,8 @@
-# Sistema de Adopciones - Tarea 3
+# Sistema de Adopciones - Tarea 4
 
 ## Descripción
 
-Aplicación web dinámica utilizando _Flask_+_MySQL_ (Mediante _SQLAlchemy_) para gestionar el proceso de adopción de perros y gatos. Permite a los usuarios publicar avisos de adopción, ver listados de adopciones disponibles y consultar estadísticas del sistema (de momento estático).
+Aplicación web dinámica utilizando _Flask_+_Spring_+_MySQL_ (Mediante _SQLAlchemy_+_Spring Boot SQL Driver_) para gestionar el proceso de adopción de perros y gatos. Permite a los usuarios publicar avisos de adopción, ver listados de adopciones disponibles, consultar estadísticas del sistema (de momento estático) y calificar avisos de adopción.
 
 ## Estructura del Proyecto
 
@@ -10,9 +10,13 @@ Para preservar el orden en la aplicación, se mantiene separado en distintos dir
 
 En el directorio `static` se encuentra todo el contenido estático del sitio, separado según sus roles (`css`, `js`, entre otros). Una nota importante es el subdirectorio `uploads`, que es donde se almacena el contenido subido por los usuarios al sitio.
 
-Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_, con la extensión `.html.j2` para poder utilizar las funciones de _highlighting_ del editor) y `util` con varios datos y funciones utilizadas a lo largo de la plataforma.
+El directorio `templates` almacena los archivos `.html.j2` (templates de _Jinja2_, con la extensión `.html.j2` para poder utilizar las funciones de _highlighting_ del editor) y `util` con varios datos y funciones utilizadas a lo largo de la plataforma.
 
-```
+Finalmente, el directorio `tarea4` almacena el _back-end Spring_, donde se organiza de forma similar a la jerarquía de archivos de la carpeta principal.
+
+```bash
+desarrollo_web_augusto_aguayo/
+|
 ├── database
 ├── static
 │   ├── css
@@ -24,6 +28,20 @@ Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_,
 ├── templates
 ├── utils
 └── app.py
+│
+└── tarea4
+    ├── .mvn
+    ├── src
+    |   ├── main
+    │   |   ├── java/dcc/aaguayo/tarea4
+    │   |   └── resources
+    |   │       ├── static
+    |   │       └── templates
+    |   └── test
+    ├── templates
+    ├── mvnw
+    ├── mvnw.cmd
+    └── pom.xml
 ```
 
 ## Notas de Implementación
@@ -56,6 +74,13 @@ Finalmente, `templates` almacena los archivos `.html.j2` (templates de _Jinja2_,
  - Los comentarios tienen verificaciones _client-side_ y _server-side_, y muestran los errores de validación, al igual que para el ingreso de un nuevo aviso de adopción.
  - Tanto para el manejo de los gráficos y el manejo de comentarios se crearon dos nuevos archivos _JS_: `comment-handler.js` y `statistics-charts.js`.
 
+### Tarea 4
+- El backend de _Spring_ se comunica mediante el puerto 5001, normalmente estarían los dos tras un mismo puerto con la ayuda de _Nginx_, pero para este caso se decidió dejarlos separados. Dado lo anterior, se actualizó la navegación de los sitios que responden a _Flask_/_Spring_ para que puedan navegar correctamente entre los puertos 5000 y 5001 respectivamente.
+- Por simplificación, se copiaron algunos datos estáticos desde el backend de _Flask_ al de _Spring_, como el _favicon_ y _css_.
+- El agregar o consultar notas se obtienen mediante _fetch_ al _API_ de _Spring_. Para el cálculo del promedio se hace del lado del cliente.
+- Se agregaron validaciones en _front-end_ y _back-end_ para asegurar que las notas correspondan a carácteres en `[1, 2, 3, 4, 5, 6, 7]`.
+- Se muestran los errores del formulario de agregar nota en el mismo modal de ingreso de nota, con un texto en color rojo.
+
 ## Configuración y ejecución
 
 Setup inicial, entorno virtual y dependencias:
@@ -63,7 +88,7 @@ Setup inicial, entorno virtual y dependencias:
 ```bash
 git clone https://github.com/aab626/desarrollo_web_augusto_aguayo.git
 cd ./desarrollo_web_augusto_aguayo
-git checkout tarea-3
+git checkout tarea-4
 ```
 
 ```bash
@@ -89,10 +114,25 @@ La creación de tablas se abstrae mediante el script `database/init_db.py`:
 python -m database.init_db
 ```
 
-Finalmente, se puede ejecutar la aplicación en modo depuración:
+Finalmente, se puede ejecutar la aplicación mediante el lanzamiento de dos distintos _back-ends_, por lo que se recomienda correrlo en dos distintas terminales:
 
+### Flask _back-end_
 ```bash
 flask --debug run
+```
+
+### Spring _back-end_
+
+#### Windows
+```bash
+cd ./tarea4
+./mvnw.cmd spring-boot:run
+```
+
+#### Linux/Mac
+```bash
+cd ./tarea4
+./mvnw spring-boot:run
 ```
 
 Por defecto, la aplicación corre en [`http://127.0.0.1:5000`](http://127.0.0.1:5000).

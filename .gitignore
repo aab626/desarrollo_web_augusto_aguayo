@@ -5,3 +5,36 @@ __pycache__/
 database/__pycache__/
 static/uploads/
 utils/fieldnames/__pycache__/
+
+# Spring backend
+tarea4/.vscode/
+tarea4/target/
+
+tarea4/HELP.md
+tarea4/target/
+tarea4/.mvn/wrapper/maven-wrapper.jar
+tarea4/!**/src/main/**/target/
+tarea4/!**/src/test/**/target/
+
+tarea4/.apt_generated
+tarea4/.classpath
+tarea4/.factorypath
+tarea4/.project
+tarea4/.settings
+tarea4/.springBeans
+tarea4/.sts4-cache
+
+tarea4/.idea
+tarea4/*.iws
+tarea4/*.iml
+tarea4/*.ipr
+
+### NetBeans ###
+tarea4/nbproject/private/
+tarea4/nbbuild/
+tarea4/dist/
+tarea4/nbdist/
+tarea4/.nb-gradle/
+tarea4/build/
+!tarea4/**/src/main/**/build/
+!tarea4/**/src/test/**/build/

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sistema de Adopciones | Calificar Avisos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicons/favicon.svg}" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="site-header">
+        <h1 class="site-title">Sistema de Adopciones</h1>
+
+        <!-- Navbar -->
+        <div th:replace="~{fragments/nav :: navbar}"></div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <h2 class="section-title">Calificar Avisos de Adopción</h2>
+
+        <!-- Listings Table -->
+        <table class="data-table" th:if="${listings != null and !listings.isEmpty()}">
+          <thead>
+            <tr>
+              <th class="table-header">ID</th>
+              <th class="table-header">Fecha Publicación</th>
+              <th class="table-header">Sector</th>
+              <th class="table-header">
+                <div>Cantidad</div>
+                <div>Tipo</div>
+                <div>Edad</div>
+              </th>
+              <th class="table-header">Comuna</th>
+              <th class="table-header">Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row" th:each="listing : ${listings}">
+              <td class="table-cell" th:text="${listing.id}">1</td>
+              <td class="table-cell date-cell" th:text="${listing.fechaPublicacion}">01/01/2024</td>
+              <td class="table-cell" th:text="${listing.sector}">Centro</td>
+              <td class="table-cell pet-info">
+                <div>
+                  <span class="pet-quantity" th:text="${listing.cantidad}">2</span>
+                  <span class="pet-type" th:text="${listing.tipo}">perro</span>
+                </div>
+                <div class="pet-age" th:text="${listing.edad}">3 años</div>
+              </td>
+              <td class="table-cell" th:text="${listing.comuna}">Santiago</td>
+              <td class="table-cell rating-cell">
+                <div th:text="${listing.nota}">-</div>
+                <button class="btn btn-primary btn-small evaluar-btn">Evaluar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="no-data" th:if="${listings == null or listings.isEmpty()}">
+          No hay avisos de adopción disponibles.
+        </div>
+      </main>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="rating-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-close-text">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p class="modal-text">Selecciona una calificación (1-7):</p>
+          <div id="rating-error" class="error-message" style="display: none;"></div>
+          <div class="modal-actions">
+            <button class="btn btn-primary rating-option" data-rating="1">1</button>
+            <button class="btn btn-primary rating-option" data-rating="2">2</button>
+            <button class="btn btn-primary rating-option" data-rating="3">3</button>
+            <button class="btn btn-primary rating-option" data-rating="4">4</button>
+            <button class="btn btn-primary rating-option" data-rating="5">5</button>
+            <button class="btn btn-primary rating-option" data-rating="6">6</button>
+            <button class="btn btn-primary rating-option" data-rating="7">7</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/navigation.js}"></script>
+    <script th:src="@{/js/ratings.js}"></script>
+  </body>
+</html>

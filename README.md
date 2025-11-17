@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Aplicación web dinámica utilizando _Flask_+_Spring_+_MySQL_ (Mediante _SQLAlchemy_+_Spring Boot SQL Driver_) para gestionar el proceso de adopción de perros y gatos. Permite a los usuarios publicar avisos de adopción, ver listados de adopciones disponibles, consultar estadísticas del sistema (de momento estático) y calificar avisos de adopción.
+Aplicación web dinámica utilizando _Flask_+_Spring_+_MySQL_ (Mediante _SQLAlchemy_+_Spring Boot SQL Driver_) para gestionar el proceso de adopción de perros y gatos. Permite a los usuarios publicar avisos de adopción, ver listados de adopciones disponibles, consultar estadísticas en vivo del sistema y calificar avisos de adopción.
 
 ## Estructura del Proyecto
 

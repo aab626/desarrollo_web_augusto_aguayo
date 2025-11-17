@@ -110,8 +110,10 @@ GRANT ALL ON tarea2.* TO cc5002 @localhost;
 
 La creación de tablas se abstrae mediante el script `database/init_db.py`:
 
+> Nota: El argumento `--populate` se utiliza cuando la base de datos esta recién creada, para solo propagar cambios del modelo se debe correr sin `--propagate`. De lo contrario arrojará errores por ingresar datos duplicados al intentar poblar las tablas `comuna` y `region`.
+
 ```bash
-python -m database.init_db
+python -m database.init_db --populate
 ```
 
 Finalmente, se puede ejecutar la aplicación mediante el lanzamiento de dos distintos _back-ends_, por lo que se recomienda correrlo en dos distintas terminales:

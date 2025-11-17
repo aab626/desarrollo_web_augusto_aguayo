@@ -14,7 +14,7 @@ El directorio `templates` almacena los archivos `.html.j2` (templates de _Jinja2
 
 Finalmente, el directorio `tarea4` almacena el _back-end Spring_, donde se organiza de forma similar a la jerarquía de archivos de la carpeta principal.
 
-```bash
+```plaintext
 desarrollo_web_augusto_aguayo/
 |
 ├── database
